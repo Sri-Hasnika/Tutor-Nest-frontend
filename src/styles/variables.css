@@ -1,0 +1,42 @@
+:root {
+  /* Brand Colors */
+  --brand-primary: #4f46e5;
+  --brand-primary-light: #6366f1;
+  --brand-primary-dark: #4338ca;
+  --brand-secondary: #0ea5e9;
+  --brand-accent: #8b5cf6;
+
+  /* Semantic Colors */
+  --semantic-success: #10b981;
+  --semantic-warning: #f59e0b;
+  --semantic-danger: #ef4444;
+  --semantic-info: #3b82f6;
+
+  /* Background Colors */
+  --bg-light: #ffffff;
+  --bg-light-alt: #f9fafb;
+  --bg-dark: #111827;
+  --bg-dark-alt: #1f2937;
+
+  /* Text Colors */
+  --text-light: #f9fafb;
+  --text-light-muted: #9ca3af;
+  --text-dark: #111827;
+  --text-dark-muted: #6b7280;
+
+  /* Border Colors */
+  --border-light: #e5e7eb;
+  --border-dark: #374151;
+
+  /* Component Specific */
+  --header-height: 4rem;
+  --sidebar-width: 16rem;
+  --footer-height: 3rem;
+
+  /* Breakpoints */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+}
