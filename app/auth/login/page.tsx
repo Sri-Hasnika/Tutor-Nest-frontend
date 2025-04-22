@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -5,6 +7,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { GraduationCap } from "lucide-react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+// import { useRouter } from "next/"
 import { useState } from "react"
 
 export default function LoginPage() {
@@ -12,6 +16,8 @@ export default function LoginPage() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [rememberMe, setRememberMe] = useState(false)
+
+  const router = useRouter();
 
   // Handle form submission
   const handleSubmit = async (event:any) => {
@@ -23,7 +29,7 @@ export default function LoginPage() {
     }
 
     try {
-      const response = await fetch("https://tutor-nest-backend.onrender.com/tutee-api/login", {
+      const response = await fetch("http://localhost:8000/tutee-api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -33,12 +39,16 @@ export default function LoginPage() {
 
       if (!response.ok) {
         alert("Login failed, please try again.")
-      } else {
-        const data = await response.json()
-        console.log("Login successful:", data)
-        // Redirect to another page, e.g., dashboard
-        window.location.href = "/dashboard"
+        return
       }
+
+        const data = await response.json()
+        console.log("Login successful:", data);
+        localStorage.setItem("token",data.token);
+        localStorage.setItem("user", JSON.stringify(data.tuteeLogin));
+        // Redirect to another page, e.g., dashboard
+        router.push("/dashboard");
+      
     } catch (error) {
       console.error("Error during login:", error)
       alert("An error occurred. Please try again.")

@@ -1,13 +1,26 @@
+"use client"
+
 import type React from "react"
 import { GraduationCap } from "lucide-react"
 import Link from "next/link"
 import { DashboardNav } from "./dashboard-nav"
+import { useEffect, useState } from "react"
 
 interface DashboardShellProps {
   children: React.ReactNode
 }
 
 export function DashboardShell({ children }: DashboardShellProps) {
+  const [curUser, setCurUser] = useState<any>();
+  
+    const getCurUser=()=>{
+      const user = JSON.parse(localStorage.getItem("user") || "null");
+      if (!user) return;
+      setCurUser(user);
+    }
+    useEffect(()=>{
+      getCurUser();
+    },[])
   return (
     <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -46,7 +59,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
               <span className="relative flex h-8 w-8 shrink-0 overflow-hidden rounded-full">
                 <img className="aspect-square h-full w-full" src="/placeholder.svg?height=32&width=32" alt="User" />
               </span>
-              <span className="hidden md:block">Alex Johnson</span>
+              <span className="hidden md:block">{curUser?.firstName + " " + curUser?.lastName}</span>
             </Link>
           </nav>
         </div>
