@@ -53,19 +53,19 @@ export default function AboutUsPage() {
             {[
               {
                 name: "Sri Hasnika Venigalla",
-                role: "Frontend Developer",
+                role: "Founder",
                 image: "/placeholder.svg?height=80&width=80",
               },
               {
-                name: "Michael Chen",
-                role: "Backend Engineer",
+                name: "Devendra Yalamaddi ",
+                role: "Full Stack Developer",
                 image: "/placeholder.svg?height=80&width=80",
               },
-              {
-                name: "Emily Rodriguez",
-                role: "Product Designer",
-                image: "/placeholder.svg?height=80&width=80",
-              },
+              // {
+              //   name: "",
+              //   role: "Product Designer",
+              //   image: "/placeholder.svg?height=80&width=80",
+              // },
             ].map((member, index) => (
               <div key={index} className="flex items-center space-x-4">
                 <Image

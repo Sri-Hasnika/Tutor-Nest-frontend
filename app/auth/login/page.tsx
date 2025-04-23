@@ -5,10 +5,10 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { GraduationCap } from "lucide-react"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { GraduationCap, User, Mail, Lock, School } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-// import { useRouter } from "next/"
 import { useState } from "react"
 
 export default function LoginPage() {
@@ -16,11 +16,12 @@ export default function LoginPage() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [rememberMe, setRememberMe] = useState(false)
+  const [userRole, setUserRole] = useState("tutee") // Default to tutee
 
   const router = useRouter();
 
   // Handle form submission
-  const handleSubmit = async (event:any) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
 
     const formData = {
@@ -29,7 +30,10 @@ export default function LoginPage() {
     }
 
     try {
-      const response = await fetch("http://localhost:8000/tutee-api/login", {
+      // Use dynamic endpoint based on selected role
+      const endpoint = userRole === "tutee" ? "tutee-api/login" : "tutor-api/login"
+      
+      const response = await fetch(`http://localhost:8000/${endpoint}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -42,12 +46,20 @@ export default function LoginPage() {
         return
       }
 
-        const data = await response.json()
-        console.log("Login successful:", data);
-        localStorage.setItem("token",data.token);
+      const data = await response.json()
+      console.log("Login successful:", data);
+      localStorage.setItem("token", data.token);
+      
+      if (userRole === "tutee") {
         localStorage.setItem("user", JSON.stringify(data.tuteeLogin));
-        // Redirect to another page, e.g., dashboard
+        // Redirect to tutee dashboard
         router.push("/dashboard");
+      } else {
+        // For tutor role
+        localStorage.setItem("user", JSON.stringify(data.tutorLogin || data.user));
+        // Redirect to tutor dashboard
+        router.push("/tutor/dashboard");
+      }
       
     } catch (error) {
       console.error("Error during login:", error)
@@ -56,33 +68,92 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-muted/50 p-4">
-      <Link href="/" className="absolute left-4 top-4 flex items-center gap-2 md:left-8 md:top-8">
-        <GraduationCap className="h-6 w-6 text-primary" />
-        <span className="text-lg font-bold">EduConnect</span>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 p-4">
+      <Link 
+        href="/" 
+        className="absolute left-4 top-4 flex items-center gap-2 md:left-8 md:top-8 transition-transform hover:scale-105"
+      >
+        <div className="bg-primary rounded-full p-2 text-white">
+          <GraduationCap className="h-6 w-6" />
+        </div>
+        <span className="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-600">EduConnect</span>
       </Link>
-      <Card className="w-full max-w-md">
+      
+      <Card className="w-full max-w-md shadow-lg border-0 overflow-hidden">
+        <div className="h-2 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"></div>
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold">Log in</CardTitle>
-          <CardDescription>Enter your email and password to access your account</CardDescription>
+          <CardTitle className="text-2xl font-bold text-center">Welcome Back!</CardTitle>
+          <CardDescription className="text-center">Log in to continue your learning journey</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <form onSubmit={handleSubmit}>
+        <CardContent className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-5">
+            {/* Role selection */}
+            <div className="space-y-3">
+              <Label className="text-base font-medium">Login as</Label>
+              <div className="grid grid-cols-2 gap-4">
+                <div 
+                  className={`border rounded-xl p-3 flex items-center gap-3 cursor-pointer transition-all hover:bg-blue-50 ${userRole === 'tutee' ? 'border-primary bg-blue-50 shadow-md' : 'border-gray-200'}`}
+                  onClick={() => setUserRole("tutee")}
+                >
+                  <div className={`rounded-full p-2 ${userRole === 'tutee' ? 'bg-primary text-white' : 'bg-gray-100'}`}>
+                    <User className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <span className="font-medium">Student</span>
+                    <p className="text-xs text-gray-500">I want to learn</p>
+                  </div>
+                </div>
+                <div 
+                  className={`border rounded-xl p-3 flex items-center gap-3 cursor-pointer transition-all hover:bg-blue-50 ${userRole === 'tutor' ? 'border-primary bg-blue-50 shadow-md' : 'border-gray-200'}`}
+                  onClick={() => setUserRole("tutor")}
+                >
+                  <div className={`rounded-full p-2 ${userRole === 'tutor' ? 'bg-primary text-white' : 'bg-gray-100'}`}>
+                    <School className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <span className="font-medium">Tutor</span>
+                    <p className="text-xs text-gray-500">I want to teach</p>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Hidden radio group for form submission */}
+              <RadioGroup
+                value={userRole}
+                onValueChange={setUserRole}
+                className="hidden"
+              >
+                <RadioGroupItem value="tutee" id="tutee" />
+                <RadioGroupItem value="tutor" id="tutor" />
+              </RadioGroup>
+            </div>
+            
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email" className="flex items-center gap-2">
+                <Mail className="h-4 w-4 text-primary" />
+                Email Address
+              </Label>
               <Input
                 id="email"
                 type="email"
-                placeholder="m@example.com"
+                placeholder="your.email@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                className="rounded-lg"
               />
             </div>
+            
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <Label htmlFor="password">Password</Label>
-                <Link href="/auth/reset-password" className="text-sm text-primary underline-offset-4 hover:underline">
+                <Label htmlFor="password" className="flex items-center gap-2">
+                  <Lock className="h-4 w-4 text-primary" />
+                  Password
+                </Label>
+                <Link 
+                  href="/auth/reset-password" 
+                  className="text-sm text-primary font-medium hover:underline transition-all"
+                >
                   Forgot password?
                 </Link>
               </div>
@@ -92,35 +163,52 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                className="rounded-lg"
               />
             </div>
+            
             <div className="flex items-center space-x-2">
               <Checkbox
                 id="remember"
                 checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
+                onCheckedChange={(checked) => setRememberMe(checked === true)}
+                className="data-[state=checked]:bg-primary data-[state=checked]:border-primary"
               />
               <Label
                 htmlFor="remember"
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                className="text-sm font-medium leading-none cursor-pointer select-none"
               >
-                Remember me
+                Remember me for 30 days
               </Label>
             </div>
-            <CardFooter className="flex flex-col space-y-4">
-              <Button type="submit" className="w-full">
-                Log in
-              </Button>
-              <div className="text-center text-sm">
-                Don&apos;t have an account?{" "}
-                <Link href="/auth/register" className="text-primary underline-offset-4 hover:underline">
-                  Sign up
-                </Link>
-              </div>
-            </CardFooter>
+            
+            <Button 
+              type="submit" 
+              className="w-full py-6 rounded-lg bg-primary hover:bg-primary/90 transition-all"
+            >
+              Sign In
+            </Button>
           </form>
         </CardContent>
+        
+        <CardFooter className="flex justify-center pb-6 pt-0">
+          <div className="text-center text-sm">
+            Don&apos;t have an account yet?{" "}
+            <Link 
+              href="/auth/register" 
+              className="text-primary font-medium hover:underline transition-all"
+            >
+              Create an account
+            </Link>
+          </div>
+        </CardFooter>
       </Card>
+      
+      {/* Decorative elements */}
+      <div className="fixed top-0 left-0 w-full h-full pointer-events-none overflow-hidden -z-10">
+        <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-blue-200 opacity-20 blur-3xl"></div>
+        <div className="absolute bottom-20 -left-20 w-80 h-80 rounded-full bg-purple-200 opacity-20 blur-3xl"></div>
+      </div>
     </div>
   )
 }
