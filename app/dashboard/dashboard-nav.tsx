@@ -25,8 +25,9 @@ export function DashboardNav() {
       // This is just a placeholder implementation
       const userData = localStorage.getItem("userData")
       if (userData) {
-        const parsedUserData = JSON.parse(userData)
-        setUserRole(parsedUserData.role)
+        const parsedUserData = userData
+        console.log("Role:", parsedUserData)
+        setUserRole(parsedUserData)
       }
     }
 

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -13,6 +13,7 @@ import { Calendar, Filter, Search, Star } from "lucide-react"
 import Image from "next/image"
 import { DashboardHeader } from "../dashboard-header"
 import { DashboardShell } from "../dashboard-shell"
+import { useRouter } from "next/navigation"
 
 const allTutors = [
   {
@@ -109,9 +110,23 @@ export default function FindTutorsPage() {
   const [availability, setAvailability] = useState<string[]>([])
   const [filteredTutors, setFilteredTutors] = useState(allTutors)
 
-  // useEffect( async()=>{
-  //   const fetchTutors= await fetch("http://localhost:8000/")
-  // })
+  useEffect(() => {
+    const fetchTutors = async () => {
+      try {
+        const response = await fetch("http://localhost:8000/tutor-api/tutor", {
+          method: "GET",
+        });
+        const data = await response.json();
+        console.log(data.payload);
+        setFilteredTutors(data.payload);
+      } catch (error) {
+        console.error("Failed to fetch tutors:", error);
+      }
+    };
+  
+    fetchTutors();
+  }, []);
+  
   
   // New filter states
   const [qualification, setQualification] = useState("any")
@@ -184,6 +199,8 @@ export default function FindTutorsPage() {
     const convertedPrice = Math.round(priceUSD * rate)
     return `${symbol}${convertedPrice}`
   }
+
+  const router = useRouter();
 
   return (
     <DashboardShell>
@@ -363,7 +380,7 @@ export default function FindTutorsPage() {
             <p className="text-sm text-muted-foreground">Showing {filteredTutors.length} tutors</p>
           </div>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {filteredTutors.map((tutor, index) => (
+            {filteredTutors?.map((tutor, index) => (
               <Card key={index}>
                 <CardHeader className="pb-2">
                   <div className="flex justify-between">
@@ -391,13 +408,13 @@ export default function FindTutorsPage() {
                   <div className="flex items-center justify-center gap-2 mt-3">
                     <div className="flex items-center text-xs text-muted-foreground">
                       <Calendar className="h-3 w-3 mr-1" />
-                      {tutor.availability.join(", ")}
+                      {tutor.availability?.join(", ")}
                     </div>
                   </div>
                 </CardContent>
                 <CardFooter className="flex gap-2">
                   <Button variant="outline" size="sm" className="w-full">View Profile</Button>
-                  <Button size="sm" className="w-full">Book Session</Button>
+                  <Button size="sm" className="w-full" onClick={()=> router.push(`/demoClass/${tutor?._id}`)}>Book Session</Button>
                 </CardFooter>
               </Card>
             ))}
