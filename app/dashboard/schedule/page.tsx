@@ -24,7 +24,7 @@ export default function SchedulePage() {
             <CardDescription>View and manage your scheduled sessions</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="flex justify-end mb-4">
+            {/* <div className="flex justify-end mb-4">
               <Select defaultValue="month">
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="View" />
@@ -35,7 +35,7 @@ export default function SchedulePage() {
                   <SelectItem value="month">Month</SelectItem>
                 </SelectContent>
               </Select>
-            </div>
+            </div> */}
             <Calendar mode="single" className="rounded-md border" />
           </CardContent>
         </Card>
@@ -43,7 +43,7 @@ export default function SchedulePage() {
           <Card>
             <CardHeader>
               <CardTitle>Today's Sessions</CardTitle>
-              <CardDescription>October 10, 2024</CardDescription>
+              <CardDescription>{ Date()}</CardDescription> {/*.split(' ').slice(0, 3).join(' ')*/}
             </CardHeader>
             <CardContent className="space-y-4">
               {[

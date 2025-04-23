@@ -106,12 +106,12 @@ export function DashboardNav() {
       </Button>
       
       <Button asChild variant="ghost" className="w-full justify-start gap-2">
-        <Link href="/dashboard/messages">
+        <Link href="/dashboard/notifications">
           <MessageSquare className="h-4 w-4" />
-          Messages
-          <span className="ml-auto flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[10px] font-medium text-primary-foreground">
+          Notifications
+          {/* <span className="ml-auto flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[10px] font-medium text-primary-foreground">
             3
-          </span>
+          </span> */}
         </Link>
       </Button>
       

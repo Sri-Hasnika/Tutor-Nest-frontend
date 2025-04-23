@@ -108,6 +108,10 @@ export default function FindTutorsPage() {
   const [search, setSearch] = useState("")
   const [availability, setAvailability] = useState<string[]>([])
   const [filteredTutors, setFilteredTutors] = useState(allTutors)
+
+  // useEffect( async()=>{
+  //   const fetchTutors= await fetch("http://localhost:8000/")
+  // })
   
   // New filter states
   const [qualification, setQualification] = useState("any")

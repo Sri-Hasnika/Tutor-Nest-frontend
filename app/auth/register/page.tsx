@@ -357,7 +357,7 @@ export default function RegisterPage() {
                   type="button"
                   onClick={handleNext}
                   className="flex-1"
-                  disabled={step === 0 && !formData.role}
+                  disabled={(step === 0 || step===1) && !formData.role}
                 >
                   Next
                 </Button>
