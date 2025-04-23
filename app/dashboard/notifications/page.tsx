@@ -89,6 +89,11 @@ export default function TutorNotificationsPage() {
                 📘 <span className="font-medium">Subject:</span> {item.subject}
               </p>
 
+              <p>
+                {/* finalDate must be rendered here */}
+                📅 <span className="font-medium">Date:</span> {new Date(item.finalDate).toLocaleDateString()}
+              </p>
+
               {item.meetLink && (
                 <p className="text-blue-600 dark:text-blue-400">
                   🔗 <Link href={item.meetLink} target="_blank" className="underline">Join Meet</Link>

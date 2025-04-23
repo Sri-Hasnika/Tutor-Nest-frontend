@@ -9,7 +9,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { GraduationCap, User, Mail, Lock, School } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 export default function LoginPage() {
   // State to manage form inputs
@@ -31,6 +31,8 @@ export default function LoginPage() {
 
     try {
       // Use dynamic endpoint based on selected role
+      localStorage.setItem("role", userRole)
+      
       const endpoint = userRole === "tutee" ? "tutee-api/login" : "tutor-api/login"
       
       const response = await fetch(`http://localhost:8000/${endpoint}`, {
@@ -58,7 +60,7 @@ export default function LoginPage() {
         // For tutor role
         localStorage.setItem("user", JSON.stringify(data.tutorLogin || data.user));
         // Redirect to tutor dashboard
-        router.push("/tutor/dashboard");
+        router.push("/dashboard/tutor/profile");
       }
       
     } catch (error) {

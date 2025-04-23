@@ -26,6 +26,7 @@ interface DemoClass {
   message: string;
   status: string;
   meetLink: string;
+  finalDate?: string;
   createdAt: string;
 }
 
@@ -34,6 +35,7 @@ const DemoClasses: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [updatedLinks, setUpdatedLinks] = useState<{ [key: string]: string }>({});
+  const [updatedFinalDates, setUpdatedFinalDates] = useState<{ [key: string]: string }>({});
 
   const tutorId = localStorage.getItem("tId");
 
@@ -56,24 +58,31 @@ const DemoClasses: React.FC = () => {
     setUpdatedLinks(prev => ({ ...prev, [id]: value }));
   };
 
+  const handleDateChange = (id: string, value: string) => {
+    setUpdatedFinalDates(prev => ({ ...prev, [id]: value }));
+  };
+
   const handleUploadLink = async (classItem: DemoClass) => {
     const meetLink = updatedLinks[classItem._id];
+    const finalDate = updatedFinalDates[classItem._id];
+
     if (!meetLink) return alert("Please enter a valid Meet link");
+    if (!finalDate) return alert("Please select a valid final date and time");
 
     try {
       await axios.put(
         `http://localhost:8000/tutor-api/demo-class/${classItem.tutorId}/${classItem._id}`,
-        { meetLink },
+        { meetLink, finalDate },
         { headers: { "Content-Type": "application/json" } }
       );
-      alert("Meet link uploaded successfully");
+      alert("Meet link and final date uploaded successfully");
       setDemoClasses(prev =>
         prev.map(item =>
-          item._id === classItem._id ? { ...item, meetLink } : item
+          item._id === classItem._id ? { ...item, meetLink, finalDate } : item
         )
       );
     } catch (err) {
-      alert("Failed to upload Meet link");
+      alert("Failed to upload Meet link and final date");
     }
   };
 
@@ -96,11 +105,17 @@ const DemoClasses: React.FC = () => {
             value={updatedLinks[demo._id] ?? demo.meetLink ?? ""}
             onChange={(e) => handleInputChange(demo._id, e.target.value)}
           />
+          <input
+            type="datetime-local"
+            className="w-full px-3 py-2 border rounded-md"
+            value={updatedFinalDates[demo._id] ?? (demo.finalDate ? demo.finalDate.substring(0, 16) : "")}
+            onChange={(e) => handleDateChange(demo._id, e.target.value)}
+          />
           <button
             onClick={() => handleUploadLink(demo)}
             className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
           >
-            Upload Link
+            Upload Link & Date
           </button>
         </div>
       ))}

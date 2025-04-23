@@ -413,11 +413,12 @@ export default function FindTutorsPage() {
                   </div>
                 </CardContent>
                 <CardFooter className="flex gap-2">
-                  <Button variant="outline" size="sm" className="w-full">View Profile</Button>
+                  <Button variant="outline" size="sm" className="w-full" onClick={()=>router.push(`/dashboard/find-tutors/${tutor?._id}`)}>View Profile</Button>
                   <Button size="sm" className="w-full" onClick={()=> router.push(`/demoClass/${tutor?._id}`)}>Book Session</Button>
                 </CardFooter>
               </Card>
             ))}
+            {/* <input type="datetime-local" /> */}
           </div>
         </div>
       </div>
