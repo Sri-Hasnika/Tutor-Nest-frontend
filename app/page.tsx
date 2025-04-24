@@ -1,17 +1,36 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { BookOpen, Calendar, GraduationCap, Search, Users } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
 
 export default function Home() {
+  const router = useRouter();
+  const [checkingAuth, setCheckingAuth] = useState(true)
+
+  useEffect(() => {
+    const role = localStorage.getItem("role")
+    if (role === "tutee") {
+      router.replace("/dashboard")
+    } else if (role === "tutor") {
+      router.replace("/dashboard/tutor/profile")
+    } else {
+      setCheckingAuth(false)
+    }
+  }, [router])
+
+  if (checkingAuth) return null 
   return (
     <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-16 items-center justify-between">
           <div className="flex items-center gap-2">
             <GraduationCap className="h-6 w-6 text-primary" />
-            <span className="text-xl font-bold">EduConnt</span>
+            <span className="text-xl font-bold">EduConnect</span>
           </div>
           <nav className="hidden md:flex items-center gap-6">
             <Link href="/" className="text-sm font-medium">

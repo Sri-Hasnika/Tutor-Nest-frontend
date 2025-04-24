@@ -21,7 +21,7 @@ export default function LoginPage() {
   const router = useRouter();
 
   // Handle form submission
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event:any) => {
     event.preventDefault()
 
     const formData = {
@@ -60,7 +60,7 @@ export default function LoginPage() {
         // For tutor role
         localStorage.setItem("user", JSON.stringify(data.tutorLogin || data.user));
         // Redirect to tutor dashboard
-        router.push("/dashboard/tutor/profile");
+        router.push("/tutor/dashboard");
       }
       
     } catch (error) {

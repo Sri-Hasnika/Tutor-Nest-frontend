@@ -12,11 +12,14 @@ interface DashboardShellProps {
 
 export function DashboardShell({ children }: DashboardShellProps) {
   const [curUser, setCurUser] = useState<any>();
+  const [home,setHome] = useState<any>("/");
   
     const getCurUser=()=>{
       const user = JSON.parse(localStorage.getItem("user") || "null");
       if (!user) return;
       setCurUser(user);
+      const role = localStorage.getItem("role")||"tutee";
+      setHome(role === "tutor" ? "/dashboard/tutor/profile" : "/dashboard");
     }
     useEffect(()=>{
       getCurUser();
@@ -27,10 +30,10 @@ export function DashboardShell({ children }: DashboardShellProps) {
         <div className="container flex h-16 items-center justify-between">
           <div className="flex items-center gap-2">
             
-            <Link href="/" className="flex items-center gap-2">
-  <GraduationCap className="h-6 w-6 text-primary" />
-  <span className="text-xl font-bold">EduConnect</span>
-</Link>
+            <Link href={`${home}`} className="flex items-center gap-2">
+              <GraduationCap className="h-6 w-6 text-primary" />
+              <span className="text-xl font-bold">EduConnect</span>
+            </Link>
 
           </div>
           <nav className="flex items-center gap-4">
