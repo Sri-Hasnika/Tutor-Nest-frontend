@@ -1,632 +1,3 @@
-// "use client"
-
-// import { Button } from "@/components/ui/button"
-// import { Calendar } from "@/components/ui/calendar"
-// import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-// import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-// import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-// import { Clock, Plus, Video } from "lucide-react"
-// import Image from "next/image"
-// import { DashboardHeader } from "../dashboard-header"
-// import { DashboardShell } from "../dashboard-shell"
-// import { useRouter } from "next/navigation"
-// import { useState } from "react"
-
-// const mockSessions = [
-//   {
-//     _id: "session1",
-//     subject: "Mathematics - Algebra",
-//     tuteeId: { name: "Alice Johnson" },
-//     finalDate: new Date().setHours(10, 0, 0),
-//     status: "accepted",
-//     meetLink: "https://meet.google.com/abc-123",
-//   },
-//   {
-//     _id: "session2",
-//     subject: "Physics - Thermodynamics",
-//     tuteeId: { name: "Bob Smith" },
-//     finalDate: new Date().setHours(15, 30, 0),
-//     status: "pending",
-//     meetLink: "",
-//   },
-//   {
-//     _id: "session3",
-//     subject: "Chemistry - Organic Reactions",
-//     tuteeId: { name: "Clara Davis" },
-//     finalDate: new Date(new Date().setDate(new Date().getDate() + 1)).setHours(9, 0, 0),
-//     status: "accepted",
-//     meetLink: "https://meet.google.com/xyz-456",
-//   },
-//   {
-//     _id: "session4",
-//     subject: "Biology - Cell Division",
-//     tuteeId: { name: "David Lee" },
-//     finalDate: new Date(new Date().setDate(new Date().getDate() + 1)).setHours(14, 0, 0),
-//     status: "accepted",
-//     meetLink: "https://meet.google.com/xyz-789",
-//   },
-//   {
-//     _id: "session5",
-//     subject: "English - Essay Writing",
-//     tuteeId: { name: "Eva Watson" },
-//     finalDate: new Date(new Date().setDate(new Date().getDate() - 1)).setHours(11, 0, 0),
-//     status: "rejected",
-//     meetLink: "",
-//   },
-// ];
-
-// export default function SchedulePage() {
-//   const router = useRouter();
-//   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
-
-//   // Filter and sort sessions for selected date
-//   const sessionsForSelectedDate = mockSessions
-//     .filter(session => {
-//       const sessionDate = new Date(session.finalDate).toDateString();
-//       return selectedDate && sessionDate === selectedDate.toDateString();
-//     })
-//     .sort((a, b) => a.finalDate - b.finalDate);
-  
-//   return (
-//     <DashboardShell>
-//       <DashboardHeader heading="Schedule" text="Manage your upcoming sessions and book new ones">
-//         <Button onClick={()=> router.push('/dashboard/find-tutors')}>
-//           <Plus className="mr-2 h-4 w-4" />
-//           Book Session
-//         </Button>
-//       </DashboardHeader>
-//       <div className="grid gap-4 md:grid-cols-[1fr_300px]">
-//       <Card className="col-span-1">
-//           <CardHeader>
-//             <CardTitle>Calendar</CardTitle>
-//             <CardDescription>View and manage your scheduled sessions</CardDescription>
-//           </CardHeader>
-//           <CardContent>
-//             <Calendar
-//               mode="single"
-//               selected={selectedDate}
-//               onSelect={setSelectedDate}
-//               className="rounded-md border"
-//             />
-//             <h2 className="text-lg font-semibold mt-4">Sessions on {selectedDate?.toDateString()}</h2>
-//             <div className="space-y-4 mt-2">
-//               {sessionsForSelectedDate.length === 0 && (
-//                 <p className="text-sm text-muted-foreground">No sessions scheduled on this date.</p>
-//               )}
-//               {sessionsForSelectedDate.map((session) => (
-//                 <div key={session._id} className="flex items-start space-x-4 rounded-md border p-3">
-//                   <Image
-//                     src={"/placeholder.svg?height=40&width=40"}
-//                     alt={session.tuteeId.name}
-//                     width={40}
-//                     height={40}
-//                     className="rounded-full"
-//                   />
-//                   <div className="flex-1 space-y-1">
-//                     <p className="font-medium leading-none">{session.subject}</p>
-//                     <p className="text-sm text-muted-foreground">with {session.tuteeId.name}</p>
-//                     <div className="flex items-center pt-2">
-//                       <Clock className="mr-1 h-3 w-3 text-muted-foreground" />
-//                       <span className="text-xs text-muted-foreground">
-//                         {new Date(session.finalDate).toLocaleTimeString([], {
-//                           hour: '2-digit',
-//                           minute: '2-digit',
-//                         })}
-//                       </span>
-//                     </div>
-//                   </div>
-//                   {session.status === 'accepted' && session.meetLink ? (
-//                     <a href={session.meetLink} target="_blank" rel="noopener noreferrer">
-//                       <Button size="sm">
-//                         <Video className="mr-1 h-3 w-3" />
-//                         Join
-//                       </Button>
-//                     </a>
-//                   ) : (
-//                     <Button size="sm" disabled>
-//                       {session.status === 'pending' ? 'Pending' : 'Unavailable'}
-//                     </Button>
-//                   )}
-//                 </div>
-//               ))}
-//             </div>
-//           </CardContent>
-//         </Card>
-//         <div className="space-y-4">
-//           {/* <Card>
-//             <CardHeader>
-//               <CardTitle>Today's Sessions</CardTitle>
-//               <CardDescription>{ Date()}</CardDescription> //*.split(' ').slice(0, 3).join(' ')
-//             </CardHeader>
-//             <CardContent className="space-y-4">
-//               {[
-//                 {
-//                   subject: "Physics Mechanics",
-//                   tutor: "Dr. Michael Chen",
-//                   time: "2:00 PM - 3:30 PM",
-//                   image: "/placeholder.svg?height=40&width=40",
-//                   status: "upcoming",
-//                 },
-//               ].map((session, index) => (
-//                 <div key={index} className="flex items-start space-x-4 rounded-md border p-3">
-//                   <Image
-//                     src={session.image || "/placeholder.svg"}
-//                     alt={session.tutor}
-//                     width={40}
-//                     height={40}
-//                     className="rounded-full"
-//                   />
-//                   <div className="flex-1 space-y-1">
-//                     <p className="font-medium leading-none">{session.subject}</p>
-//                     <p className="text-sm text-muted-foreground">with {session.tutor}</p>
-//                     <div className="flex items-center pt-2">
-//                       <Clock className="mr-1 h-3 w-3 text-muted-foreground" />
-//                       <span className="text-xs text-muted-foreground">{session.time}</span>
-//                     </div>
-//                   </div>
-//                   <Button size="sm">
-//                     <Video className="mr-1 h-3 w-3" />
-//                     Join
-//                   </Button>
-//                 </div>
-//               ))}
-//             </CardContent>
-//           </Card> */}
-//           <Card>
-//             <CardHeader>
-//               <CardTitle>Today's Sessions</CardTitle>
-//               <CardDescription>{new Date().toDateString()}</CardDescription>
-//             </CardHeader>
-//             <CardContent className="space-y-4">
-//               {[
-//                 {
-//                   _id: "session1",
-//                   tuteeId: {
-//                     _id: "tutee1",
-//                     name: "Alice Johnson",
-//                     email: "alice@example.com",
-//                   },
-//                   tutorId: "tutor1",
-//                   subject: "Mathematics - Algebra",
-//                   message: "Need help with quadratic equations.",
-//                   status: "accepted",
-//                   meetLink: "https://meet.google.com/ccp-rxvk-vdy",
-//                   finalDate: new Date().toISOString(), // today's date
-//                   createdAt: new Date().toISOString(),
-//                 },
-//                 {
-//                   _id: "session2",
-//                   tuteeId: {
-//                     _id: "tutee2",
-//                     name: "Bob Smith",
-//                     email: "bob@example.com",
-//                   },
-//                   tutorId: "tutor2",
-//                   subject: "Physics - Thermodynamics",
-//                   message: "Revision before test.",
-//                   status: "pending",
-//                   meetLink: "",
-//                   finalDate: new Date(new Date().setHours(15, 30, 0)).toISOString(), // today at 3:30 PM
-//                   createdAt: new Date().toISOString(),
-//                 },
-//                 {
-//                   _id: "session3",
-//                   tuteeId: {
-//                     _id: "tutee3",
-//                     name: "Clara Davis",
-//                     email: "clara@example.com",
-//                   },
-//                   tutorId: "tutor3",
-//                   subject: "Chemistry - Organic Reactions",
-//                   message: "Need explanation of SN1 and SN2.",
-//                   status: "rejected",
-//                   meetLink: "",
-//                   finalDate: new Date(new Date().setDate(new Date().getDate() - 1)).toISOString(), // yesterday
-//                   createdAt: new Date().toISOString(),
-//                 },
-//               ]
-//                 .filter((session) => {
-//                   const today = new Date().toDateString();
-//                   const sessionDate = session.finalDate ? new Date(session.finalDate).toDateString() : '';
-//                   return today === sessionDate;
-//                 })
-//                 .map((session) => (
-//                   <div key={session._id} className="flex items-start space-x-4 rounded-md border p-3">
-//                     <Image
-//                       src={"/placeholder.svg?height=40&width=40"}
-//                       alt={session.tuteeId?.name || "Session"}
-//                       width={40}
-//                       height={40}
-//                       className="rounded-full"
-//                     />
-//                     <div className="flex-1 space-y-1">
-//                       <p className="font-medium leading-none">{session.subject}</p>
-//                       <p className="text-sm text-muted-foreground">
-//                         with {session.tuteeId?.name || "Tutee"}
-//                       </p>
-//                       {session.finalDate && (
-//                         <div className="flex items-center pt-2">
-//                           <Clock className="mr-1 h-3 w-3 text-muted-foreground" />
-//                           <span className="text-xs text-muted-foreground">
-//                             {new Date(session.finalDate).toLocaleTimeString([], {
-//                               hour: '2-digit',
-//                               minute: '2-digit',
-//                             })}
-//                           </span>
-//                         </div>
-//                       )}
-//                     </div>
-//                     {session.status === 'accepted' && session.meetLink ? (
-//                       <a href={session.meetLink} target="_blank" rel="noopener noreferrer">
-//                         <Button size="sm">
-//                           <Video className="mr-1 h-3 w-3" />
-//                           Join
-//                         </Button>
-//                       </a>
-//                     ) : (
-//                       <Button size="sm" disabled>
-//                         {session.status === 'pending' ? 'Pending' : 'Unavailable'}
-//                       </Button>
-//                     )}
-//                   </div>
-//                 ))}
-//             </CardContent>
-//           </Card>
-
-//           <Card>
-//             <CardHeader>
-//               <CardTitle>Upcoming Sessions</CardTitle>
-//               <CardDescription>Next 7 days</CardDescription>
-//             </CardHeader>
-//             <CardContent className="space-y-4">
-//               {[
-//                 {
-//                   subject: "Advanced Calculus",
-//                   tutor: "Dr. Sarah Johnson",
-//                   date: "Oct 12",
-//                   time: "4:00 PM - 5:30 PM",
-//                   image: "/placeholder.svg?height=40&width=40",
-//                 },
-//                 {
-//                   subject: "English Literature",
-//                   tutor: "Prof. Emily Rodriguez",
-//                   date: "Oct 14",
-//                   time: "3:00 PM - 4:00 PM",
-//                   image: "/placeholder.svg?height=40&width=40",
-//                 },
-//               ].map((session, index) => (
-//                 <div key={index} className="flex items-start space-x-4 rounded-md border p-3">
-//                   <Image
-//                     src={session.image || "/placeholder.svg"}
-//                     alt={session.tutor}
-//                     width={40}
-//                     height={40}
-//                     className="rounded-full"
-//                   />
-//                   <div className="flex-1 space-y-1">
-//                     <p className="font-medium leading-none">{session.subject}</p>
-//                     <p className="text-sm text-muted-foreground">with {session.tutor}</p>
-//                     <div className="flex items-center pt-2">
-//                       <Clock className="mr-1 h-3 w-3 text-muted-foreground" />
-//                       <span className="text-xs text-muted-foreground">
-//                         {session.date}, {session.time}
-//                       </span>
-//                     </div>
-//                   </div>
-//                   <Button variant="outline" size="sm">
-//                     Reschedule
-//                   </Button>
-//                 </div>
-//               ))}
-//             </CardContent>
-//           </Card>
-//         </div>
-//       </div>
-//       <Tabs defaultValue="upcoming" className="space-y-4 mt-6">
-//         <TabsList>
-//           <TabsTrigger value="upcoming">Upcoming</TabsTrigger>
-//           <TabsTrigger value="past">Past Sessions</TabsTrigger>
-//           {/* <TabsTrigger value="canceled">Canceled</TabsTrigger> */}
-//         </TabsList>
-//         <TabsContent value="upcoming" className="space-y-4">
-//           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-//             {[
-//               {
-//                 subject: "Advanced Calculus",
-//                 tutor: "Dr. Sarah Johnson",
-//                 date: "Mon, Oct 12",
-//                 time: "4:00 PM - 5:30 PM",
-//                 image: "/placeholder.svg?height=40&width=40",
-//               },
-//               {
-//                 subject: "English Literature",
-//                 tutor: "Prof. Emily Rodriguez",
-//                 date: "Wed, Oct 14",
-//                 time: "3:00 PM - 4:00 PM",
-//                 image: "/placeholder.svg?height=40&width=40",
-//               },
-//               {
-//                 subject: "Physics Mechanics",
-//                 tutor: "Dr. Michael Chen",
-//                 date: "Fri, Oct 16",
-//                 time: "5:00 PM - 6:30 PM",
-//                 image: "/placeholder.svg?height=40&width=40",
-//               },
-//             ].map((session, index) => (
-//               <Card key={index}>
-//                 <CardHeader className="pb-2">
-//                   <CardTitle>{session.subject}</CardTitle>
-//                   <CardDescription>with {session.tutor}</CardDescription>
-//                 </CardHeader>
-//                 <CardContent>
-//                   <div className="flex items-center space-x-4">
-//                     <Image
-//                       src={session.image || "/placeholder.svg"}
-//                       alt={session.tutor}
-//                       width={40}
-//                       height={40}
-//                       className="rounded-full"
-//                     />
-//                     <div className="space-y-1">
-//                       <p className="text-sm font-medium leading-none">{session.date}</p>
-//                       <p className="text-sm text-muted-foreground">{session.time}</p>
-//                     </div>
-//                   </div>
-//                   <div className="mt-4 flex space-x-2">
-//                     <Button variant="outline" size="sm" className="w-full">
-//                       Reschedule
-//                     </Button>
-//                     <Button size="sm" className="w-full">
-//                       Join
-//                     </Button>
-//                   </div>
-//                 </CardContent>
-//               </Card>
-//             ))}
-//           </div>
-//         </TabsContent>
-//         <TabsContent value="past" className="space-y-4">
-//           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-//             {[
-//               {
-//                 subject: "Chemistry Basics",
-//                 tutor: "Dr. Robert Lee",
-//                 date: "Mon, Oct 5",
-//                 time: "2:00 PM - 3:30 PM",
-//                 image: "/placeholder.svg?height=40&width=40",
-//               },
-//               {
-//                 subject: "Algebra Review",
-//                 tutor: "Dr. Sarah Johnson",
-//                 date: "Wed, Oct 7",
-//                 time: "4:00 PM - 5:00 PM",
-//                 image: "/placeholder.svg?height=40&width=40",
-//               },
-//             ].map((session, index) => (
-//               <Card key={index}>
-//                 <CardHeader className="pb-2">
-//                   <CardTitle>{session.subject}</CardTitle>
-//                   <CardDescription>with {session.tutor}</CardDescription>
-//                 </CardHeader>
-//                 <CardContent>
-//                   <div className="flex items-center space-x-4">
-//                     <Image
-//                       src={session.image || "/placeholder.svg"}
-//                       alt={session.tutor}
-//                       width={40}
-//                       height={40}
-//                       className="rounded-full"
-//                     />
-//                     <div className="space-y-1">
-//                       <p className="text-sm font-medium leading-none">{session.date}</p>
-//                       <p className="text-sm text-muted-foreground">{session.time}</p>
-//                     </div>
-//                   </div>
-//                   <div className="mt-4 flex space-x-2">
-//                     <Button variant="outline" size="sm" className="w-full">
-//                       Recording
-//                     </Button>
-//                     <Button variant="outline" size="sm" className="w-full">
-//                       Book Again
-//                     </Button>
-//                   </div>
-//                 </CardContent>
-//               </Card>
-//             ))}
-//           </div>
-//         </TabsContent>
-//         {/* <TabsContent value="canceled" className="space-y-4">
-//           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-//             {[
-//               {
-//                 subject: "Spanish Conversation",
-//                 tutor: "Maria Gonzalez",
-//                 date: "Fri, Oct 2",
-//                 time: "1:00 PM - 2:00 PM",
-//                 image: "/placeholder.svg?height=40&width=40",
-//                 reason: "Tutor unavailable",
-//               },
-//             ].map((session, index) => (
-//               <Card key={index}>
-//                 <CardHeader className="pb-2">
-//                   <div className="flex justify-between items-center">
-//                     <CardTitle>{session.subject}</CardTitle>
-//                     <div className="inline-block rounded-full bg-red-100 px-3 py-1 text-xs font-medium text-red-800">
-//                       Canceled
-//                     </div>
-//                   </div>
-//                   <CardDescription>with {session.tutor}</CardDescription>
-//                 </CardHeader>
-//                 <CardContent>
-//                   <div className="flex items-center space-x-4">
-//                     <Image
-//                       src={session.image || "/placeholder.svg"}
-//                       alt={session.tutor}
-//                       width={40}
-//                       height={40}
-//                       className="rounded-full"
-//                     />
-//                     <div className="space-y-1">
-//                       <p className="text-sm font-medium leading-none">{session.date}</p>
-//                       <p className="text-sm text-muted-foreground">{session.time}</p>
-//                     </div>
-//                   </div>
-//                   <div className="mt-2">
-//                     <p className="text-sm text-muted-foreground">Reason: {session.reason}</p>
-//                   </div>
-//                   <div className="mt-4">
-//                     <Button variant="outline" size="sm" className="w-full">
-//                       Reschedule
-//                     </Button>
-//                   </div>
-//                 </CardContent>
-//               </Card>
-//             ))}
-//           </div>
-//         </TabsContent> */}
-//       </Tabs>
-//     </DashboardShell>
-//   )
-// }
-
-// // "use client"
-
-// // import { useState } from "react"
-// // import { Button } from "@/components/ui/button"
-// // import { Calendar } from "@/components/ui/calendar"
-// // import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-// // import { Clock, Plus, Video } from "lucide-react"
-// // import Image from "next/image"
-// // import { DashboardHeader } from "../dashboard-header"
-// // import { DashboardShell } from "../dashboard-shell"
-// // import { useRouter } from "next/navigation"
-
-// // // Extended mock data
-// // const mockSessions = [
-// //   {
-// //     _id: "session1",
-// //     subject: "Mathematics - Algebra",
-// //     tuteeId: { name: "Alice Johnson" },
-// //     finalDate: new Date().setHours(10, 0, 0),
-// //     status: "accepted",
-// //     meetLink: "https://meet.google.com/abc-123",
-// //   },
-// //   {
-// //     _id: "session2",
-// //     subject: "Physics - Thermodynamics",
-// //     tuteeId: { name: "Bob Smith" },
-// //     finalDate: new Date().setHours(15, 30, 0),
-// //     status: "pending",
-// //     meetLink: "",
-// //   },
-// //   {
-// //     _id: "session3",
-// //     subject: "Chemistry - Organic Reactions",
-// //     tuteeId: { name: "Clara Davis" },
-// //     finalDate: new Date(new Date().setDate(new Date().getDate() + 1)).setHours(9, 0, 0),
-// //     status: "accepted",
-// //     meetLink: "https://meet.google.com/xyz-456",
-// //   },
-// //   {
-// //     _id: "session4",
-// //     subject: "Biology - Cell Division",
-// //     tuteeId: { name: "David Lee" },
-// //     finalDate: new Date(new Date().setDate(new Date().getDate() + 1)).setHours(14, 0, 0),
-// //     status: "accepted",
-// //     meetLink: "https://meet.google.com/xyz-789",
-// //   },
-// //   {
-// //     _id: "session5",
-// //     subject: "English - Essay Writing",
-// //     tuteeId: { name: "Eva Watson" },
-// //     finalDate: new Date(new Date().setDate(new Date().getDate() - 1)).setHours(11, 0, 0),
-// //     status: "rejected",
-// //     meetLink: "",
-// //   },
-// // ];
-
-// // export default function SchedulePage() {
-// //   const router = useRouter();
-//   // const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
-
-//   // // Filter and sort sessions for selected date
-//   // const sessionsForSelectedDate = mockSessions
-//   //   .filter(session => {
-//   //     const sessionDate = new Date(session.finalDate).toDateString();
-//   //     return selectedDate && sessionDate === selectedDate.toDateString();
-//   //   })
-//   //   .sort((a, b) => a.finalDate - b.finalDate);
-
-// //   return (
-// //     <DashboardShell>
-// //       <DashboardHeader heading="Schedule" text="Manage your upcoming sessions and book new ones">
-// //         <Button onClick={() => router.push('/dashboard/find-tutors')}>
-// //           <Plus className="mr-2 h-4 w-4" />
-// //           Book Session
-// //         </Button>
-// //       </DashboardHeader>
-// //       <div className="grid gap-4 md:grid-cols-[1fr_300px]">
-// //         <Card className="col-span-1">
-// //           <CardHeader>
-// //             <CardTitle>Calendar</CardTitle>
-// //             <CardDescription>View and manage your scheduled sessions</CardDescription>
-// //           </CardHeader>
-// //           <CardContent>
-// //             <Calendar
-// //               mode="single"
-// //               selected={selectedDate}
-// //               onSelect={setSelectedDate}
-// //               className="rounded-md border"
-// //             />
-// //             <h2 className="text-lg font-semibold mt-4">Sessions on {selectedDate?.toDateString()}</h2>
-// //             <div className="space-y-4 mt-2">
-// //               {sessionsForSelectedDate.length === 0 && (
-// //                 <p className="text-sm text-muted-foreground">No sessions scheduled on this date.</p>
-// //               )}
-// //               {sessionsForSelectedDate.map((session) => (
-// //                 <div key={session._id} className="flex items-start space-x-4 rounded-md border p-3">
-// //                   <Image
-// //                     src={"/placeholder.svg?height=40&width=40"}
-// //                     alt={session.tuteeId.name}
-// //                     width={40}
-// //                     height={40}
-// //                     className="rounded-full"
-// //                   />
-// //                   <div className="flex-1 space-y-1">
-// //                     <p className="font-medium leading-none">{session.subject}</p>
-// //                     <p className="text-sm text-muted-foreground">with {session.tuteeId.name}</p>
-// //                     <div className="flex items-center pt-2">
-// //                       <Clock className="mr-1 h-3 w-3 text-muted-foreground" />
-// //                       <span className="text-xs text-muted-foreground">
-// //                         {new Date(session.finalDate).toLocaleTimeString([], {
-// //                           hour: '2-digit',
-// //                           minute: '2-digit',
-// //                         })}
-// //                       </span>
-// //                     </div>
-// //                   </div>
-// //                   {session.status === 'accepted' && session.meetLink ? (
-// //                     <a href={session.meetLink} target="_blank" rel="noopener noreferrer">
-// //                       <Button size="sm">
-// //                         <Video className="mr-1 h-3 w-3" />
-// //                         Join
-// //                       </Button>
-// //                     </a>
-// //                   ) : (
-// //                     <Button size="sm" disabled>
-// //                       {session.status === 'pending' ? 'Pending' : 'Unavailable'}
-// //                     </Button>
-// //                   )}
-// //                 </div>
-// //               ))}
-// //             </div>
-// //           </CardContent>
-// //         </Card>
-// //       </div>
-// //     </DashboardShell>
-// //   );
-// // }
-
 "use client"
 
 import { Button } from "@/components/ui/button"
@@ -634,7 +5,8 @@ import { Calendar } from "@/components/ui/calendar"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Clock, Plus, Video, VideoIcon } from "lucide-react"
+import { Badge } from "@/components/ui/badge"
+import { Clock, Calendar as CalendarIcon, Plus, Video, VideoIcon, Users, Book, ArrowRight } from "lucide-react"
 import Image from "next/image"
 import { DashboardHeader } from "../dashboard-header"
 import { DashboardShell } from "../dashboard-shell"
@@ -747,230 +119,428 @@ export default function SchedulePage() {
     })
     .sort((a, b) => a.finalDate - b.finalDate);
 
+  // Filter past sessions
+  const pastSessions = sessions
+    .filter(session => {
+      if (!session.finalDate) return false;
+      return new Date(session.finalDate) < new Date();
+    })
+    .sort((a, b) => b.finalDate - a.finalDate); // Sort reverse chronologically
+
+  // Get date with sessions to highlight in calendar
+  const datesWithSessions = sessions
+    .filter(session => session.finalDate)
+    .map(session => new Date(session.finalDate).toDateString());
+
+  // Function to get status badge for a session
+  const getSessionStatusBadge = (session) => {
+    if (!session.finalDate) {
+      return <Badge variant="outline">Unscheduled</Badge>;
+    }
+    
+    const sessionTime = new Date(session.finalDate);
+    const now = new Date();
+    
+    if (isSessionJoinable(session.finalDate)) {
+      return <Badge className="bg-green-500">In Progress</Badge>;
+    } else if (sessionTime > now) {
+      return <Badge variant="secondary">Upcoming</Badge>;
+    } else {
+      return <Badge variant="outline">Completed</Badge>;
+    }
+  };
+
   return (
     <DashboardShell>
-      <DashboardHeader heading="Schedule" text="Manage your upcoming sessions and book new ones">
-        <Button onClick={()=> router.push('/dashboard/find-tutors')}>
+      <DashboardHeader 
+        heading="Your Schedule" 
+        text="Manage your upcoming sessions and book new ones"
+      >
+        <Button onClick={()=> router.push('/dashboard/find-tutors')} className="shadow-sm">
           <Plus className="mr-2 h-4 w-4" />
           Book Session
         </Button>
       </DashboardHeader>
-      <div className="grid gap-4 md:grid-cols-[1fr_300px]">
-      <Card className="col-span-1">
-          <CardHeader>
-            <CardTitle>Calendar</CardTitle>
-            <CardDescription>View and manage your scheduled sessions</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Calendar
-              mode="single"
-              selected={selectedDate}
-              onSelect={setSelectedDate}
-              className="rounded-md border"
-            />
-            <h2 className="text-lg font-semibold mt-4">Sessions on {selectedDate?.toDateString()}</h2>
-            <div className="space-y-4 mt-2">
-              {isLoading ? (
-                <p className="text-sm text-muted-foreground">Loading sessions...</p>
-              ) : sessionsForSelectedDate.length === 0 ? (
-                <p className="text-sm text-muted-foreground">No sessions scheduled on this date.</p>
-              ) : (
-                sessionsForSelectedDate.map((session) => (
-                  <div key={session._id} className="flex items-start space-x-4 rounded-md border p-3">
-                    <VideoIcon
-                      width={40}
-                      height={40}
-                      className="rounded-full"
-                    />
-                    <div className="flex-1 space-y-1">
-                      <p className="font-medium leading-none">{session.subject}</p>
-                      <p className="text-sm text-muted-foreground">with {session.tutorId.name}</p>
-                      <div className="flex items-center pt-2">
-                        <Clock className="mr-1 h-3 w-3 text-muted-foreground" />
-                        <span className="text-xs text-muted-foreground">
-                          {new Date(session.finalDate).toLocaleTimeString([], {
-                            hour: '2-digit',
-                            minute: '2-digit',
-                          })}
-                        </span>
-                      </div>
-                    </div>
-                    {session.meetLink ? (
-                      isSessionJoinable(session.finalDate) ? (
-                        <a href={session.meetLink} target="_blank" rel="noopener noreferrer">
-                          <Button size="sm">
-                            <Video className="mr-1 h-3 w-3" />
-                            Join
-                          </Button>
-                        </a>
-                      ) : (
-                        <Button size="sm" disabled>
-                          {new Date(session.finalDate) > new Date() ? 'Not Started' : 'Ended'}
-                        </Button>
-                      )
-                    ) : (
-                      <Button size="sm" disabled>
-                        {session.status === 'pending' ? 'Pending' : 'No Link'}
-                      </Button>
-                    )}
-                  </div>
-                ))
-              )}
+
+      {/* Quick status overview */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100">
+          <CardContent className="pt-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-blue-600">Today's Sessions</p>
+                <p className="text-2xl font-bold">{todaySessions.length}</p>
+              </div>
+              <div className="p-2 bg-white rounded-full shadow-sm">
+                <CalendarIcon className="h-6 w-6 text-blue-500" />
+              </div>
             </div>
           </CardContent>
         </Card>
-        <div className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Today's Sessions</CardTitle>
-              <CardDescription>{new Date().toDateString()}</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {isLoading ? (
-                <p className="text-sm text-muted-foreground">Loading sessions...</p>
-              ) : todaySessions.length === 0 ? (
-                <p className="text-sm text-muted-foreground">No sessions scheduled for today.</p>
-              ) : (
-                todaySessions.map((session) => (
-                  <div key={session._id} className="flex items-start space-x-4 rounded-md border p-3">
-                    <VideoIcon
-                      width={40}
-                      height={40}
-                      className="rounded-full"
-                    />
-                    <div className="flex-1 space-y-1">
-                      <p className="font-medium leading-none">{session.subject}</p>
-                      <p className="text-sm text-muted-foreground">with {session.tutorId.name}</p>
-                      {session.finalDate && (
-                        <div className="flex items-center pt-2">
-                          <Clock className="mr-1 h-3 w-3 text-muted-foreground" />
-                          <span className="text-xs text-muted-foreground">
-                            {new Date(session.finalDate).toLocaleTimeString([], {
-                              hour: '2-digit',
-                              minute: '2-digit',
-                            })}
-                          </span>
-                        </div>
-                      )}
-                    </div>
-                    {session.meetLink ? (
-                      isSessionJoinable(session.finalDate) ? (
-                        <a href={session.meetLink} target="_blank" rel="noopener noreferrer">
-                          <Button size="sm">
-                            <Video className="mr-1 h-3 w-3" />
-                            Join
-                          </Button>
-                        </a>
-                      ) : (
-                        <Button size="sm" disabled>
-                          {new Date(session.finalDate) > new Date() ? 'Not Started' : 'Ended'}
-                        </Button>
-                      )
-                    ) : (
-                      <Button size="sm" disabled>
-                        {session.status === 'pending' ? 'Pending' : 'No Link'}
-                      </Button>
-                    )}
-                  </div>
-                ))
-              )}
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Upcoming Sessions</CardTitle>
-              <CardDescription>Next 7 days</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {isLoading ? (
-                <p className="text-sm text-muted-foreground">Loading sessions...</p>
-              ) : upcomingSessions.length === 0 ? (
-                <p className="text-sm text-muted-foreground">No upcoming sessions in the next 7 days.</p>
-              ) : (
-                upcomingSessions.map((session) => (
-                  <div key={session._id} className="flex items-start space-x-4 rounded-md border p-3">
-                    <VideoIcon
-                      width={40}
-                      height={40}
-                      className="rounded-full"
-                    />
-                    <div className="flex-1 space-y-1">
-                      <p className="font-medium leading-none">{session.subject}</p>
-                      <p className="text-sm text-muted-foreground">with {session.tutorId.name}</p>
-                      <div className="flex items-center pt-2">
-                        <Clock className="mr-1 h-3 w-3 text-muted-foreground" />
-                        <span className="text-xs text-muted-foreground">
-                          {new Date(session.finalDate).toLocaleDateString()}, {new Date(session.finalDate).toLocaleTimeString([], {
-                            hour: '2-digit',
-                            minute: '2-digit',
-                          })}
-                        </span>
-                      </div>
-                    </div>
-                    <Button variant="outline" size="sm">
-                      Reschedule
-                    </Button>
-                  </div>
-                ))
-              )}
-            </CardContent>
-          </Card>
-        </div>
+        
+        <Card className="bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-100">
+          <CardContent className="pt-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-purple-600">Upcoming Sessions</p>
+                <p className="text-2xl font-bold">{upcomingSessions.length}</p>
+              </div>
+              <div className="p-2 bg-white rounded-full shadow-sm">
+                <Clock className="h-6 w-6 text-purple-500" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        
+        <Card className="bg-gradient-to-br from-green-50 to-teal-50 border border-green-100">
+          <CardContent className="pt-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-green-600">Past Sessions</p>
+                <p className="text-2xl font-bold">{pastSessions.length}</p>
+              </div>
+              <div className="p-2 bg-white rounded-full shadow-sm">
+                <Book className="h-6 w-6 text-green-500" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
-      <Tabs defaultValue="upcoming" className="space-y-4 mt-6">
-        <TabsList>
-          <TabsTrigger value="upcoming">Upcoming</TabsTrigger>
-          <TabsTrigger value="past">Past Sessions</TabsTrigger>
-        </TabsList>
-        <TabsContent value="upcoming" className="space-y-4">
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {isLoading ? (
-              <p className="text-sm text-muted-foreground">Loading sessions...</p>
-            ) : upcomingSessions.length === 0 ? (
-              <p className="text-sm text-muted-foreground">No upcoming sessions scheduled.</p>
-            ) : (
-              upcomingSessions.map((session) => (
-                <Card key={session._id}>
-                  <CardHeader className="pb-2">
-                    <CardTitle>{session.subject}</CardTitle>
-                    <CardDescription>with {session.tutorId.name}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex items-center space-x-4">
-                      <VideoIcon
-                        width={40}
-                        height={40}
-                        className="rounded-full"
-                      />
-                      <div className="space-y-1">
-                        <p className="text-sm font-medium leading-none">
-                          {new Date(session.finalDate).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
-                        </p>
-                        <p className="text-sm text-muted-foreground">
-                          {new Date(session.finalDate).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                        </p>
+
+      <div className="grid gap-6 md:grid-cols-[1fr_320px]">
+        <Card className="col-span-1 overflow-hidden border shadow-sm">
+          <CardHeader className="bg-gradient-to-r from-gray-50 to-gray-100 border-b">
+            <div className="flex justify-between items-center">
+              <div>
+                <CardTitle>Calendar</CardTitle>
+                <CardDescription>View and manage your scheduled sessions</CardDescription>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent className="p-0">
+            <div className="p-4 md:p-6">
+              <Calendar
+                mode="single"
+                selected={selectedDate}
+                onSelect={setSelectedDate}
+                className="rounded-md border"
+                modifiers={{
+                  hasSession: (date) => 
+                    datesWithSessions.includes(date.toDateString())
+                }}
+                modifiersStyles={{
+                  hasSession: { 
+                    fontWeight: 'bold',
+                    backgroundColor: '#EBF4FF',
+                    borderRadius: '50%' 
+                  }
+                }}
+              />
+            </div>
+            
+            <div className="border-t bg-gray-50">
+              <div className="p-4 md:p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-lg font-semibold">
+                    Sessions on {selectedDate?.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
+                  </h2>
+                  <Badge variant="outline" className="ml-2">
+                    {sessionsForSelectedDate.length} {sessionsForSelectedDate.length === 1 ? 'Session' : 'Sessions'}
+                  </Badge>
+                </div>
+                
+                <div className="space-y-3">
+                  {isLoading ? (
+                    <div className="flex justify-center items-center h-32">
+                      <div className="animate-pulse flex space-x-4">
+                        <div className="rounded-full bg-gray-200 h-10 w-10"></div>
+                        <div className="flex-1 space-y-2 py-1">
+                          <div className="h-2 bg-gray-200 rounded"></div>
+                          <div className="h-2 bg-gray-200 rounded w-5/6"></div>
+                        </div>
                       </div>
                     </div>
-                    <div className="mt-4 flex space-x-2">
-                      <Button variant="outline" size="sm" className="w-full">
-                        Reschedule
+                  ) : sessionsForSelectedDate.length === 0 ? (
+                    <div className="bg-white rounded-lg border border-dashed border-gray-300 p-6 text-center">
+                      <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-gray-100">
+                        <CalendarIcon className="h-6 w-6 text-gray-500" />
+                      </div>
+                      <p className="mt-2 text-sm font-medium text-gray-900">No sessions scheduled on this date</p>
+                      <p className="mt-1 text-sm text-gray-500">Book a session to get started</p>
+                      <Button 
+                        variant="outline" 
+                        className="mt-4"
+                        onClick={()=> router.push('/dashboard/find-tutors')}
+                      >
+                        <Plus className="mr-2 h-4 w-4" />
+                        Book New Session
                       </Button>
+                    </div>
+                  ) : (
+                    sessionsForSelectedDate.map((session) => (
+                      <div key={session._id} className="flex items-start space-x-4 rounded-lg bg-white border shadow-sm p-4 transition-all hover:border-blue-200 hover:shadow">
+                        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 text-blue-600">
+                          <VideoIcon className="h-6 w-6" />
+                        </div>
+                        <div className="flex-1 space-y-1">
+                          <div className="flex items-center justify-between">
+                            <p className="font-medium text-gray-900">{session.subject}</p>
+                            {getSessionStatusBadge(session)}
+                          </div>
+                          <p className="text-sm text-gray-600">with {session.tutorId.name}</p>
+                          <div className="flex items-center pt-2">
+                            <Clock className="mr-1 h-4 w-4 text-gray-500" />
+                            <span className="text-sm text-gray-500">
+                              {new Date(session.finalDate).toLocaleTimeString([], {
+                                hour: '2-digit',
+                                minute: '2-digit',
+                              })}
+                            </span>
+                          </div>
+                        </div>
+                        <div>
+                          {session.meetLink ? (
+                            isSessionJoinable(session.finalDate) ? (
+                              <a href={session.meetLink} target="_blank" rel="noopener noreferrer">
+                                <Button size="sm" className="shadow-sm">
+                                  <Video className="mr-1 h-3 w-3" />
+                                  Join Now
+                                </Button>
+                              </a>
+                            ) : (
+                              <Button size="sm" variant="outline" disabled>
+                                {new Date(session.finalDate) > new Date() ? 'Not Started' : 'Ended'}
+                              </Button>
+                            )
+                          ) : (
+                            <Button size="sm" variant="outline" disabled>
+                              {session.status === 'pending' ? 'Pending' : 'No Link'}
+                            </Button>
+                          )}
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <div className="space-y-6">
+          <Card className="overflow-hidden border shadow-sm">
+            <CardHeader className="bg-gradient-to-r from-blue-50 to-blue-100 border-b pb-4">
+              <CardTitle className="flex items-center">
+                <Clock className="mr-2 h-5 w-5 text-blue-500" />
+                Today's Sessions
+              </CardTitle>
+              <CardDescription>{new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</CardDescription>
+            </CardHeader>
+            <CardContent className="p-4">
+              <div className="space-y-3">
+                {isLoading ? (
+                  <div className="animate-pulse space-y-3">
+                    <div className="h-16 rounded bg-gray-100"></div>
+                    <div className="h-16 rounded bg-gray-100"></div>
+                  </div>
+                ) : todaySessions.length === 0 ? (
+                  <div className="text-center py-6">
+                    <p className="text-sm text-gray-500">No sessions scheduled for today</p>
+                  </div>
+                ) : (
+                  todaySessions.map((session) => (
+                    <div key={session._id} className="flex items-center space-x-3 rounded-lg bg-white border p-3 transition-all hover:border-blue-200 hover:shadow-sm">
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-600">
+                        <VideoIcon className="h-5 w-5" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate font-medium text-sm">{session.subject}</p>
+                        <p className="truncate text-xs text-gray-500">with {session.tutorId.name}</p>
+                        {session.finalDate && (
+                          <div className="flex items-center mt-1">
+                            <Clock className="mr-1 h-3 w-3 text-gray-400" />
+                            <span className="text-xs text-gray-500">
+                              {new Date(session.finalDate).toLocaleTimeString([], {
+                                hour: '2-digit',
+                                minute: '2-digit',
+                              })}
+                            </span>
+                          </div>
+                        )}
+                      </div>
                       {session.meetLink ? (
                         isSessionJoinable(session.finalDate) ? (
                           <a href={session.meetLink} target="_blank" rel="noopener noreferrer">
-                            <Button size="sm">
+                            <Button size="sm" className="shrink-0">
                               <Video className="mr-1 h-3 w-3" />
                               Join
                             </Button>
                           </a>
                         ) : (
-                          <Button size="sm" disabled>
+                          <Button size="sm" variant="outline" disabled className="shrink-0">
+                            {new Date(session.finalDate) > new Date() ? 'Soon' : 'Ended'}
+                          </Button>
+                        )
+                      ) : (
+                        <Button size="sm" variant="outline" disabled className="shrink-0">
+                          {session.status === 'pending' ? 'Pending' : 'No Link'}
+                        </Button>
+                      )}
+                    </div>
+                  ))
+                )}
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="overflow-hidden border shadow-sm">
+            <CardHeader className="bg-gradient-to-r from-purple-50 to-purple-100 border-b pb-4">
+              <CardTitle className="flex items-center">
+                <CalendarIcon className="mr-2 h-5 w-5 text-purple-500" />
+                Upcoming Sessions
+              </CardTitle>
+              <CardDescription>Next 7 days</CardDescription>
+            </CardHeader>
+            <CardContent className="p-4">
+              <div className="space-y-3">
+                {isLoading ? (
+                  <div className="animate-pulse space-y-3">
+                    <div className="h-16 rounded bg-gray-100"></div>
+                    <div className="h-16 rounded bg-gray-100"></div>
+                  </div>
+                ) : upcomingSessions.length === 0 ? (
+                  <div className="text-center py-6">
+                    <p className="text-sm text-gray-500">No upcoming sessions in the next 7 days</p>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="mt-4"
+                      onClick={()=> router.push('/dashboard/find-tutors')}
+                    >
+                      <Plus className="mr-2 h-3 w-3" />
+                      Book Session
+                    </Button>
+                  </div>
+                ) : (
+                  upcomingSessions.map((session) => (
+                    <div key={session._id} className="flex items-center space-x-3 rounded-lg bg-white border p-3 transition-all hover:border-purple-200 hover:shadow-sm">
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-purple-100 text-purple-600">
+                        <VideoIcon className="h-5 w-5" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate font-medium text-sm">{session.subject}</p>
+                        <p className="truncate text-xs text-gray-500">with {session.tutorId.name}</p>
+                        <div className="flex items-center mt-1">
+                          <Clock className="mr-1 h-3 w-3 text-gray-400" />
+                          <span className="text-xs text-gray-500">
+                            {new Date(session.finalDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}, {new Date(session.finalDate).toLocaleTimeString([], {
+                              hour: '2-digit',
+                              minute: '2-digit',
+                            })}
+                          </span>
+                        </div>
+                      </div>
+                      <Button variant="outline" size="sm" className="shrink-0">
+                        Reschedule
+                      </Button>
+                    </div>
+                  ))
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+
+      <Tabs defaultValue="upcoming" className="mt-6">
+        <div className="border-b mb-4">
+          <TabsList className="w-full justify-start rounded-none border-b-0 bg-transparent p-0">
+            <TabsTrigger 
+              value="upcoming" 
+              className="rounded-t-lg data-[state=active]:bg-white data-[state=active]:border data-[state=active]:border-b-0 data-[state=active]:shadow-sm"
+            >
+              Upcoming Sessions
+            </TabsTrigger>
+            <TabsTrigger 
+              value="past" 
+              className="rounded-t-lg data-[state=active]:bg-white data-[state=active]:border data-[state=active]:border-b-0 data-[state=active]:shadow-sm"
+            >
+              Past Sessions
+            </TabsTrigger>
+          </TabsList>
+        </div>
+        
+        <TabsContent value="upcoming" className="space-y-6">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {isLoading ? (
+              <div className="col-span-full animate-pulse space-y-8">
+                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                  <div className="h-48 rounded bg-gray-100"></div>
+                  <div className="h-48 rounded bg-gray-100"></div>
+                  <div className="h-48 rounded bg-gray-100"></div>
+                </div>
+              </div>
+            ) : upcomingSessions.length === 0 ? (
+              <div className="col-span-full bg-white rounded-lg border border-dashed border-gray-300 p-12 text-center">
+                <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gray-100">
+                  <CalendarIcon className="h-10 w-10 text-gray-500" />
+                </div>
+                <h3 className="mt-4 text-lg font-semibold text-gray-900">No upcoming sessions</h3>
+                <p className="mt-2 text-sm text-gray-500">Start by booking a session with one of our tutors</p>
+                <Button 
+                  className="mt-6"
+                  onClick={()=> router.push('/dashboard/find-tutors')}
+                >
+                  <Plus className="mr-2 h-4 w-4" />
+                  Book Your First Session
+                </Button>
+              </div>
+            ) : (
+              upcomingSessions.map((session) => (
+                <Card key={session._id} className="overflow-hidden border shadow-sm transition-all hover:shadow-md">
+                  <CardHeader className="pb-2 border-b bg-gradient-to-r from-gray-50 to-gray-100">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle className="text-lg">{session.subject}</CardTitle>
+                        <CardDescription>with {session.tutorId.name}</CardDescription>
+                      </div>
+                      {getSessionStatusBadge(session)}
+                    </div>
+                  </CardHeader>
+                  <CardContent className="p-6">
+                    <div className="flex items-center space-x-4">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 text-blue-600">
+                        <VideoIcon className="h-6 w-6" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium">
+                          {new Date(session.finalDate).toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })}
+                        </p>
+                        <p className="text-sm text-gray-500 flex items-center">
+                          <Clock className="mr-1 h-3 w-3" />
+                          {new Date(session.finalDate).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="mt-6 grid grid-cols-2 gap-3">
+                      <Button variant="outline" size="sm">
+                        Reschedule
+                      </Button>
+                      {session.meetLink ? (
+                        isSessionJoinable(session.finalDate) ? (
+                          <a href={session.meetLink} target="_blank" rel="noopener noreferrer" className="w-full">
+                            <Button size="sm" className="w-full">
+                              <Video className="mr-1 h-3 w-3" />
+                              Join Session
+                            </Button>
+                          </a>
+                        ) : (
+                          <Button size="sm" disabled className="w-full">
                             {new Date(session.finalDate) > new Date() ? 'Not Started' : 'Ended'}
                           </Button>
                         )
                       ) : (
-                        <Button size="sm" disabled>
+                        <Button size="sm" disabled className="w-full">
                           {session.status === 'pending' ? 'Pending' : 'No Link'}
                         </Button>
                       )}
@@ -981,49 +551,63 @@ export default function SchedulePage() {
             )}
           </div>
         </TabsContent>
-        <TabsContent value="past" className="space-y-4">
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        
+        <TabsContent value="past" className="space-y-6">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {isLoading ? (
-              <p className="text-sm text-muted-foreground">Loading sessions...</p>
+              <div className="col-span-full animate-pulse space-y-8">
+                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                  <div className="h-48 rounded bg-gray-100"></div>
+                  <div className="h-48 rounded bg-gray-100"></div>
+                  <div className="h-48 rounded bg-gray-100"></div>
+                </div>
+              </div>
+            ) : pastSessions.length === 0 ? (
+              <div className="col-span-full bg-white rounded-lg border border-dashed border-gray-300 p-12 text-center">
+                <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gray-100">
+                  <Book className="h-10 w-10 text-gray-500" />
+                </div>
+                <h3 className="mt-4 text-lg font-semibold text-gray-900">No past sessions</h3>
+                <p className="mt-2 text-sm text-gray-500">Your completed sessions will appear here</p>
+              </div>
             ) : (
-              sessions
-                .filter(session => {
-                  if (!session.finalDate) return false;
-                  return new Date(session.finalDate) < new Date();
-                })
-                .map((session) => (
-                  <Card key={session._id}>
-                    <CardHeader className="pb-2">
-                      <CardTitle>{session.subject}</CardTitle>
-                      <CardDescription>with {session.tutorId.name}</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="flex items-center space-x-4">
-                        <VideoIcon
-                          width={40}
-                          height={40}
-                          className="rounded-full"
-                        />
-                        <div className="space-y-1">
-                          <p className="text-sm font-medium leading-none">
-                            {new Date(session.finalDate).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
-                          </p>
-                          <p className="text-sm text-muted-foreground">
-                            {new Date(session.finalDate).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                          </p>
-                        </div>
+              pastSessions.map((session) => (
+                <Card key={session._id} className="overflow-hidden border shadow-sm">
+                  <CardHeader className="pb-2 border-b bg-gradient-to-r from-gray-50 to-gray-100">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle className="text-lg">{session.subject}</CardTitle>
+                        <CardDescription>with {session.tutorId.name}</CardDescription>
                       </div>
-                      <div className="mt-4 flex space-x-2">
-                        <Button variant="outline" size="sm" className="w-full">
-                          Recording
-                        </Button>
-                        <Button variant="outline" size="sm" className="w-full">
-                          Book Again
-                        </Button>
+                      <Badge variant="outline">Completed</Badge>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="p-6">
+                    <div className="flex items-center space-x-4">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-100 text-gray-600">
+                        <VideoIcon className="h-6 w-6" />
                       </div>
-                    </CardContent>
-                  </Card>
-                ))
+                      <div>
+                        <p className="text-sm font-medium">
+                          {new Date(session.finalDate).toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })}
+                        </p>
+                        <p className="text-sm text-gray-500 flex items-center">
+                          <Clock className="mr-1 h-3 w-3" />
+                          {new Date(session.finalDate).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="mt-6 grid grid-cols-2 gap-3">
+                      <Button variant="outline" size="sm" className="w-full">
+                        Recording
+                      </Button>
+                      <Button variant="outline" size="sm" className="w-full">
+                        Book Again
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))
             )}
           </div>
         </TabsContent>

@@ -130,8 +130,8 @@ export function DashboardNav() {
       )}
       
       <div className="mt-auto pt-6">
-        <NavLink href="/tutor/settings" icon={Settings}>
-          Settings
+        <NavLink href="/dashboard/about" icon={Settings}>
+          About Us
         </NavLink>
       </div>
     </nav>
