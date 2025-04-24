@@ -23,7 +23,7 @@ export function DashboardNav() {
     const fetchUserRole = () => {
       // You would replace this with your actual user data retrieval logic
       // This is just a placeholder implementation
-      const userData = localStorage.getItem("userData")
+      const userData = localStorage.getItem("role")
       if (userData) {
         const parsedUserData = userData
         console.log("Role:", parsedUserData)
@@ -69,28 +69,28 @@ export function DashboardNav() {
       {isTutor && (
         <>
           <Button asChild variant="ghost" className="w-full justify-start gap-2">
-            <Link href="/dashboard/earnings">
+            <Link href="/tutor/earnings">
               <DollarSign className="h-4 w-4" />
               Earnings
             </Link>
           </Button>
           
           <Button asChild variant="ghost" className="w-full justify-start gap-2">
-            <Link href="/dashboard/profile">
+            <Link href="/tutor/profile">
               <User className="h-4 w-4" />
               Profile
             </Link>
           </Button>
           
           <Button asChild variant="ghost" className="w-full justify-start gap-2">
-            <Link href="/dashboard/progress-tracker">
+            <Link href="/tutor/progress-tracker">
               <LineChart className="h-4 w-4" />
               Progress Tracker
             </Link>
           </Button>
           
           <Button asChild variant="ghost" className="w-full justify-start gap-2">
-            <Link href="/dashboard/sessions">
+            <Link href="/tutor/sessions">
               <Users className="h-4 w-4" />
               Sessions
             </Link>
@@ -119,7 +119,7 @@ export function DashboardNav() {
       {/* Profile link moved to common section for tutees */}
       {!isTutor && (
         <Button asChild variant="ghost" className="w-full justify-start gap-2">
-          <Link href="/dashboard/profile">
+          <Link href="/tutor/profile">
             <User className="h-4 w-4" />
             Profile
           </Link>
@@ -127,7 +127,7 @@ export function DashboardNav() {
       )}
       
       <Button asChild variant="ghost" className="w-full justify-start gap-2">
-        <Link href="/dashboard/settings">
+        <Link href="/tutor/settings">
           <Settings className="h-4 w-4" />
           Settings
         </Link>

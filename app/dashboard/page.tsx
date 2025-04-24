@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -5,12 +7,14 @@ import { BookOpen, Calendar, Clock, MessageSquare } from "lucide-react"
 import Image from "next/image"
 import { DashboardHeader } from "./dashboard-header"
 import { DashboardShell } from "./dashboard-shell"
+import { useRouter } from "next/navigation"
 
 export default function DashboardPage() {
+  const router = useRouter();
   return (
     <DashboardShell>
       <DashboardHeader heading="Dashboard" text="Welcome back, Alex!">
-        <Button>
+        <Button onClick={()=> router.push('/dashboard/schedule')}>
           <Calendar className="mr-2 h-4 w-4" />
           Schedule a Session
         </Button>
@@ -108,9 +112,9 @@ export default function DashboardPage() {
                     </div>
                   </div>
                   <div className="mt-4 flex space-x-2">
-                    <Button variant="outline" size="sm" className="w-full">
+                    {/* <Button variant="outline" size="sm" className="w-full">
                       Reschedule
-                    </Button>
+                    </Button> */}
                     <Button size="sm" className="w-full">
                       Join
                     </Button>

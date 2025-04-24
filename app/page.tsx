@@ -1,51 +1,66 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { BookOpen, Calendar, GraduationCap, Search, Users } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
 
 export default function Home() {
+  const router = useRouter();
+  const [checkingAuth, setCheckingAuth] = useState(true)
+
+  useEffect(() => {
+    const role = localStorage.getItem("role")
+    if (role === "tutee") {
+      router.replace("/dashboard")
+    } else if (role === "tutor") {
+      router.replace("/dashboard/tutor/profile")
+    } else {
+      setCheckingAuth(false)
+    }
+  }, [router])
+
+  if (checkingAuth) return null 
   return (
     <div className="flex min-h-screen flex-col">
-       <header className="sticky top-0 z-50 w-full border-b border-primary/10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-sm">
-      <div className="container flex h-16 items-center justify-between">
-        <div className="flex items-center gap-3 hover:opacity-90 transition-opacity">
-          <GraduationCap className="h-7 w-7 text-primary" />
-          <span className="text-xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">Tutor Nest</span>
+      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="container flex h-16 items-center justify-between">
+          <div className="flex items-center gap-2">
+            <GraduationCap className="h-6 w-6 text-primary" />
+            <span className="text-xl font-bold">EduConnt</span>
+          </div>
+          <nav className="hidden md:flex items-center gap-6">
+            <Link href="/" className="text-sm font-medium">
+              Home
+            </Link>
+            <Link href="/dashboard/courses" className="text-sm font-medium">
+              Courses
+            </Link>
+            <Link href="/dashboard/find-tutors" className="text-sm font-medium">
+              Find Tutors
+            </Link>
+            <Link href="/dashboard/schedule" className="text-sm font-medium">
+              Schedule
+            </Link>
+            <Link href="/dashboard/about" className="text-sm font-medium">
+              About Us
+            </Link>
+          </nav>
+          <div className="flex items-center gap-4">
+            <Link href="/auth/login">
+              <Button variant="outline" size="sm">
+                Log in
+              </Button>
+            </Link>
+            <Link href="/auth/register">
+              <Button size="sm">Sign up</Button>
+            </Link>
+          </div>
         </div>
-        
-        <nav className="hidden md:flex items-center gap-8">
-          <a href="/" className="text-sm font-medium hover:text-primary transition-colors">
-            Home
-          </a>
-          <a href="/dashboard/courses" className="text-sm font-medium hover:text-primary transition-colors">
-            Courses
-          </a>
-          <a href="/dashboard/find-tutors" className="text-sm font-medium hover:text-primary transition-colors">
-            Find Tutors
-          </a>
-          <a href="/dashboard/schedule" className="text-sm font-medium hover:text-primary transition-colors">
-            Schedule
-          </a>
-          <a href="/dashboard/about" className="text-sm font-medium hover:text-primary transition-colors">
-            About Us
-          </a>
-        </nav>
-        
-        <div className="flex items-center gap-4">
-          <a href="/auth/login">
-            <Button variant="outline" size="sm" className="hover:border-primary/50 transition-colors">
-              Log in
-            </Button>
-          </a>
-          <a href="/auth/register">
-            <Button size="sm" className="hover:bg-primary/90 transition-colors shadow-sm">
-              Sign up
-            </Button>
-          </a>
-        </div>
-      </div>
-    </header>
+      </header>
       <main className="flex-1">
         <section className="w-full py-8 md:py-16 lg:py-20 bg-gradient-to-b from-muted/50 to-background">
           <div className="container px-4 md:px-6">

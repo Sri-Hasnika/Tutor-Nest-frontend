@@ -8,6 +8,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { GraduationCap, User, Mail, Key, Phone, MapPin, Book, School } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const GENDER_OPTIONS = [
@@ -52,7 +53,7 @@ export default function RegisterPage() {
     setStep((prev) => prev - 1);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e:any) => {
     e.preventDefault();
 
     if (typeof window !== "undefined") {
@@ -70,6 +71,8 @@ export default function RegisterPage() {
       },
       body: JSON.stringify(fd),
     });
+
+    const router = useRouter();
     
     if (!response.ok) {
       const errorData = await response.json();
@@ -79,9 +82,9 @@ export default function RegisterPage() {
       const data = await response.json();
       console.log("Sign-in successful:", data);
       if (formData.role === "tutor") {
-        window.location.href = "/tutor/dashboard";
+        router.push("/tutor/dashboard");
       } else {
-        window.location.href = "/dashboard";
+        router.push("/dashboard");
       }
     }
   };
