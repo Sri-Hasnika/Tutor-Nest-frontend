@@ -1,5 +1,5 @@
 "use client"
-import { Button } from "@/components/ui/button"
+
 import { 
   BookOpen, 
   Calendar, 
@@ -14,15 +14,16 @@ import {
 } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useState } from "react"
+import { Button } from "@/components/ui/button"
+import { usePathname } from "next/navigation"
+import { cn } from "@/lib/utils"
 
 export function DashboardNav() {
   const [userRole, setUserRole] = useState("")
+  const pathname = usePathname()
 
   useEffect(() => {
-    // Fetch user role from localStorage or session
     const fetchUserRole = () => {
-      // You would replace this with your actual user data retrieval logic
-      // This is just a placeholder implementation
       const userData = localStorage.getItem("role")
       if (userData) {
         const parsedUserData = userData
@@ -37,101 +38,102 @@ export function DashboardNav() {
   const isTutee = userRole === "tutee"
   const isTutor = userRole === "tutor"
 
-  return (
-    <nav className="grid items-start gap-2 py-4">
-      <Button asChild variant="ghost" className="w-full justify-start gap-2">
-        <Link href="/dashboard">
-          <Home className="h-4 w-4" />
-          Dashboard
+  const NavLink = ({ href, icon: Icon, children }: { href: string; icon: any; children: React.ReactNode }) => {
+    const isActive = pathname === href
+    
+    return (
+      <Button
+        asChild
+        variant="ghost"
+        className={cn(
+          "w-full justify-start gap-3 transition-all duration-200",
+          "hover:bg-muted/50 hover:translate-x-1",
+          "relative overflow-hidden group",
+          isActive && "bg-muted/30 font-medium"
+        )}
+      >
+        <Link href={href}>
+          <Icon className={cn(
+            "h-4 w-4 transition-colors duration-200",
+            isActive ? "text-foreground" : "text-muted-foreground",
+            "group-hover:text-foreground"
+          )} />
+          <span className={cn(
+            "transition-colors duration-200",
+            isActive ? "text-foreground" : "text-muted-foreground",
+            "group-hover:text-foreground"
+          )}>
+            {children}
+          </span>
+          {isActive && (
+            <span className="absolute inset-y-0 left-0 w-[2px] bg-foreground" />
+          )}
         </Link>
       </Button>
+    )
+  }
+
+  return (
+    <nav className="flex flex-col gap-1 p-4">
+      <NavLink href="/dashboard" icon={Home}>
+        Dashboard
+      </NavLink>
       
-      {/* Tutee-specific navigation items */}
       {isTutee && (
         <>
-          <Button asChild variant="ghost" className="w-full justify-start gap-2">
-            <Link href="/dashboard/courses">
-              <BookOpen className="h-4 w-4" />
-              My Courses
-            </Link>
-          </Button>
-          
-          <Button asChild variant="ghost" className="w-full justify-start gap-2">
-            <Link href="/dashboard/find-tutors">
-              <Search className="h-4 w-4" />
-              Find Tutors
-            </Link>
-          </Button>
+          <div className="mt-6 mb-2 px-3">
+            <p className="text-xs font-medium text-muted-foreground">Learning</p>
+          </div>
+          <NavLink href="/dashboard/courses" icon={BookOpen}>
+            My Courses
+          </NavLink>
+          <NavLink href="/dashboard/find-tutors" icon={Search}>
+            Find Tutors
+          </NavLink>
         </>
       )}
       
-      {/* Tutor-specific navigation items */}
       {isTutor && (
         <>
-          <Button asChild variant="ghost" className="w-full justify-start gap-2">
-            <Link href="/tutor/earnings">
-              <DollarSign className="h-4 w-4" />
-              Earnings
-            </Link>
-          </Button>
-          
-          <Button asChild variant="ghost" className="w-full justify-start gap-2">
-            <Link href="/tutor/profile">
-              <User className="h-4 w-4" />
-              Profile
-            </Link>
-          </Button>
-          
-          <Button asChild variant="ghost" className="w-full justify-start gap-2">
-            <Link href="/tutor/progress-tracker">
-              <LineChart className="h-4 w-4" />
-              Progress Tracker
-            </Link>
-          </Button>
-          
-          <Button asChild variant="ghost" className="w-full justify-start gap-2">
-            <Link href="/tutor/sessions">
-              <Users className="h-4 w-4" />
-              Sessions
-            </Link>
-          </Button>
+          <div className="mt-6 mb-2 px-3">
+            <p className="text-xs font-medium text-muted-foreground">Teaching</p>
+          </div>
+          <NavLink href="/tutor/earnings" icon={DollarSign}>
+            Earnings
+          </NavLink>
+          <NavLink href="/tutor/profile" icon={User}>
+            Profile
+          </NavLink>
+          <NavLink href="/tutor/progress-tracker" icon={LineChart}>
+            Progress Tracker
+          </NavLink>
+          <NavLink href="/tutor/sessions" icon={Users}>
+            Sessions
+          </NavLink>
         </>
       )}
       
-      {/* Common navigation items for all user roles */}
-      <Button asChild variant="ghost" className="w-full justify-start gap-2">
-        <Link href="/dashboard/schedule">
-          <Calendar className="h-4 w-4" />
-          Schedule
-        </Link>
-      </Button>
+      <div className="mt-6 mb-2 px-3">
+        <p className="text-xs font-medium text-muted-foreground">General</p>
+      </div>
+      <NavLink href="/dashboard/schedule" icon={Calendar}>
+        Schedule
+      </NavLink>
+      <NavLink href="/dashboard/notifications" icon={MessageSquare}>
+        Notifications
+      </NavLink>
       
-      <Button asChild variant="ghost" className="w-full justify-start gap-2">
-        <Link href="/dashboard/notifications">
-          <MessageSquare className="h-4 w-4" />
-          Notifications
-          {/* <span className="ml-auto flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[10px] font-medium text-primary-foreground">
-            3
-          </span> */}
-        </Link>
-      </Button>
-      
-      {/* Profile link moved to common section for tutees */}
       {!isTutor && (
-        <Button asChild variant="ghost" className="w-full justify-start gap-2">
-          <Link href="/tutor/profile">
-            <User className="h-4 w-4" />
-            Profile
-          </Link>
-        </Button>
+        <NavLink href="/dashboard/profile" icon={User}>
+          Profile
+        </NavLink>
       )}
       
-      <Button asChild variant="ghost" className="w-full justify-start gap-2">
-        <Link href="/tutor/settings">
-          <Settings className="h-4 w-4" />
+      <div className="mt-auto pt-6">
+        <NavLink href="/tutor/settings" icon={Settings}>
           Settings
-        </Link>
-      </Button>
+        </NavLink>
+      </div>
     </nav>
   )
 }

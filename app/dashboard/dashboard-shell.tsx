@@ -1,10 +1,11 @@
 "use client"
 
 import type React from "react"
-import { GraduationCap } from "lucide-react"
+import { GraduationCap, LogOutIcon } from "lucide-react"
 import Link from "next/link"
 import { DashboardNav } from "./dashboard-nav"
 import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
 
 interface DashboardShellProps {
   children: React.ReactNode
@@ -12,32 +13,45 @@ interface DashboardShellProps {
 
 export function DashboardShell({ children }: DashboardShellProps) {
   const [curUser, setCurUser] = useState<any>();
-  const [home,setHome] = useState<any>("/");
-  
-    const getCurUser=()=>{
-      const user = JSON.parse(localStorage.getItem("user") || "null");
-      if (!user) return;
-      setCurUser(user);
-      const role = localStorage.getItem("role")||"tutee";
-      setHome(role === "tutor" ? "/dashboard/tutor/profile" : "/dashboard");
-    }
-    useEffect(()=>{
-      getCurUser();
-    },[])
+  const [home, setHome] = useState<any>("/");
+  const router = useRouter();
+
+  const getCurUser = () => {
+    const user = JSON.parse(localStorage.getItem("user") || "null");
+    if (!user) return;
+    setCurUser(user);
+    const role = localStorage.getItem("role") || "tutee";
+    setHome(role === "tutor" ? "/dashboard/tutor/profile" : "/dashboard");
+  }
+
+  useEffect(() => {
+    getCurUser();
+  }, [])
+
+  const getInitials = (firstName?: string, lastName?: string) => {
+    if (!firstName && !lastName) return "U";
+    return `${firstName?.[0] || ""}${lastName?.[0] || ""}`.toUpperCase();
+  };
+
+  const logout = () => {
+    localStorage.removeItem("role")
+    localStorage.removeItem("user")
+    localStorage.removeItem("token")
+    router.push("/");
+  }
+
   return (
     <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-16 items-center justify-between">
           <div className="flex items-center gap-2">
-            
-            <Link href={`${home}`} className="flex items-center gap-2">
+            <Link href={`${home}`} className="flex items-center gap-2 transition-transform hover:scale-105">
               <GraduationCap className="h-6 w-6 text-primary" />
               <span className="text-xl font-bold">EduConnect</span>
             </Link>
-
           </div>
-          <nav className="flex items-center gap-4">
-            <Link href="/dashboard/notifications" className="relative">
+          <nav className="flex items-center gap-6">
+            <Link href="/dashboard/notifications" className="relative transition-transform hover:scale-105">
               <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-medium text-primary-foreground">
                 3
               </span>
@@ -58,12 +72,21 @@ export function DashboardShell({ children }: DashboardShellProps) {
               </svg>
               <span className="sr-only">Notifications</span>
             </Link>
-            <Link href="/dashboard/profile" className="flex items-center gap-2">
-              <span className="relative flex h-8 w-8 shrink-0 overflow-hidden rounded-full">
-                <img className="aspect-square h-full w-full" src="/placeholder.svg?height=32&width=32" alt="User" />
-              </span>
-              <span className="hidden md:block">{curUser?.firstName + " " + curUser?.lastName}</span>
+            <Link href="/dashboard/profile" className="flex items-center gap-3 transition-transform hover:scale-105">
+              <div className="relative flex h-9 w-9 shrink-0 overflow-hidden rounded-full bg-gradient-to-br from-blue-500 to-purple-500 shadow-md">
+                <div className="flex h-full w-full items-center justify-center text-sm font-semibold text-white">
+                  {getInitials(curUser?.firstName, curUser?.lastName)}
+                </div>
+              </div>
+              <span className="hidden font-medium md:block">{curUser?.firstName} {curUser?.lastName}</span>
             </Link>
+            <button 
+              onClick={logout}
+              className="flex items-center gap-2 rounded-full p-2 transition-colors hover:bg-gray-100"
+              title="Logout"
+            >
+              <LogOutIcon className="h-5 w-5 text-gray-600" />
+            </button>
           </nav>
         </div>
       </header>
@@ -75,7 +98,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
           <div className="grid gap-6">{children}</div>
         </main>
       </div>
-      <footer className="border-t py-6">
+      <footer className="border-t py-6 bg-gradient-to-r from-blue-50/50 to-purple-50/50">
         <div className="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
           <div className="flex items-center gap-2">
             <GraduationCap className="h-6 w-6 text-primary" />
@@ -89,4 +112,3 @@ export function DashboardShell({ children }: DashboardShellProps) {
     </div>
   )
 }
-

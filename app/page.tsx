@@ -30,7 +30,7 @@ export default function Home() {
         <div className="container flex h-16 items-center justify-between">
           <div className="flex items-center gap-2">
             <GraduationCap className="h-6 w-6 text-primary" />
-            <span className="text-xl font-bold">EduConnt</span>
+            <span className="text-xl font-bold">Tutor Nest</span>
           </div>
           <nav className="hidden md:flex items-center gap-6">
             <Link href="/" className="text-sm font-medium">
@@ -97,7 +97,7 @@ export default function Home() {
                   style={{ border: 'none' }}
                 ></iframe>
                 <div className="absolute bottom-2 right-2 bg-white/80 px-2 py-1 text-xs font-medium rounded shadow-md z-10">
-                  EduConnect AI
+                  Tutor Nest
                 </div>
               </div>
             </div>
@@ -284,7 +284,7 @@ export default function Home() {
                 <div className="space-y-2">
                   <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">Ready to Start Learning?</h2>
                   <p className="max-w-[600px] md:text-xl">
-                    Join thousands of students who are achieving their academic goals with EduConnect.
+                    Join thousands of students who are achieving their academic goals with Tutor Nest.
                   </p>
                 </div>
                 <div className="flex flex-col gap-2 min-[400px]:flex-row">
@@ -332,10 +332,10 @@ export default function Home() {
         <div className="container flex flex-col items-center justify-between gap-4 md:h-16 md:flex-row">
           <div className="flex items-center gap-2">
             <GraduationCap className="h-6 w-6 text-primary" />
-            <span className="text-lg font-bold">EduConnect</span>
+            <span className="text-lg font-bold">Tutor Nest</span>
           </div>
           <p className="text-center text-sm leading-loose text-muted-foreground md:text-left">
-            © 2025 EduConnect. All rights reserved.
+            © 2025 Tutor Nest. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
             <Link href="/terms" className="text-sm text-muted-foreground underline-offset-4 hover:underline">
