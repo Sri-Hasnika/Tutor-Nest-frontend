@@ -60,7 +60,7 @@ export default function LoginPage() {
         // For tutor role
         localStorage.setItem("user", JSON.stringify(data.tutorLogin || data.user));
         // Redirect to tutor dashboard
-        router.push("/dashboard/tutor/profile");
+        router.push("/dashboard/TutorDashboardPage.tsx");
       }
       
     } catch (error) {
