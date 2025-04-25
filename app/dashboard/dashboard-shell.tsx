@@ -47,7 +47,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
           <div className="flex items-center gap-2">
             <Link href={`${home}`} className="flex items-center gap-2 transition-transform hover:scale-105">
               <GraduationCap className="h-6 w-6 text-primary" />
-              <span className="text-xl font-bold">EduConnect</span>
+              <span className="text-xl font-bold">Tutor Nest</span>
             </Link>
           </div>
           <nav className="flex items-center gap-6">
@@ -102,10 +102,10 @@ export function DashboardShell({ children }: DashboardShellProps) {
         <div className="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
           <div className="flex items-center gap-2">
             <GraduationCap className="h-6 w-6 text-primary" />
-            <span className="text-lg font-bold">EduConnect</span>
+            <span className="text-lg font-bold">Tutor Nest</span>
           </div>
           <p className="text-center text-sm leading-loose text-muted-foreground md:text-left">
-            © 2025 EduConnect. All rights reserved.
+            © 2025 Tutor Nest. All rights reserved.
           </p>
         </div>
       </footer>

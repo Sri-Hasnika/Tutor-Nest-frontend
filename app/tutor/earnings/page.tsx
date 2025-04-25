@@ -1,28 +1,40 @@
+import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
+import { DollarSign } from "lucide-react"
+import { DashboardHeader } from "@/app/dashboard/dashboard-header"
+import { DashboardShell } from "@/app/dashboard/dashboard-shell"
 import { EarningsSummary } from "@/components/tutor/earnings-summary"
 import { PaymentSetupForm } from "@/components/tutor/payment-setup-form"
 import { PricingForm } from "@/components/tutor/pricing-form"
 
 export default function EarningsPage() {
   return (
-    <div className="container py-10">
-      <h1 className="text-3xl font-bold mb-6">Earnings & Pricing</h1>
+    <DashboardShell>
+      <DashboardHeader heading="Earnings & Pricing" text="Manage your rates and payment information">
+        <Button>
+          <DollarSign className="mr-2 h-4 w-4" />
+          Download Tax Documents
+        </Button>
+      </DashboardHeader>
 
-      <div className="grid gap-8 md:grid-cols-2">
-        <div className="bg-white rounded-2xl p-6 shadow-md md:col-span-2">
+      <div className="grid gap-6">
+        <Card className="p-6">
           <h2 className="text-xl font-semibold mb-4">Earnings Summary</h2>
           <EarningsSummary />
-        </div>
+        </Card>
 
-        <div className="bg-white rounded-2xl p-6 shadow-md">
-          <h2 className="text-xl font-semibold mb-4">Set Pricing</h2>
-          <PricingForm />
-        </div>
+        <div className="grid gap-6 md:grid-cols-2">
+          <Card className="p-6">
+            <h2 className="text-xl font-semibold mb-4">Set Pricing</h2>
+            <PricingForm />
+          </Card>
 
-        <div className="bg-white rounded-2xl p-6 shadow-md">
-          <h2 className="text-xl font-semibold mb-4">Payment Setup</h2>
-          <PaymentSetupForm />
+          <Card className="p-6">
+            <h2 className="text-xl font-semibold mb-4">Payment Setup</h2>
+            <PaymentSetupForm />
+          </Card>
         </div>
       </div>
-    </div>
+    </DashboardShell>
   )
 }

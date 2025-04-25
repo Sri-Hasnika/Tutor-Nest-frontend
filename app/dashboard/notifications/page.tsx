@@ -1,9 +1,13 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
+import { Button } from "@/components/ui/button"
 import { Card, CardContent } from '@/components/ui/card'
+import { Bell } from "lucide-react"
 import { formatDistanceToNow } from 'date-fns'
 import Link from 'next/link'
+import { DashboardHeader } from "@/app/dashboard/dashboard-header"
+import { DashboardShell } from "@/app/dashboard/dashboard-shell"
 
 export default function TutorNotificationsPage() {
   const [notifications, setNotifications] = useState<any[]>([])
@@ -55,54 +59,83 @@ export default function TutorNotificationsPage() {
   }, [tuteeId])
 
   const filteredNotifications = notifications.filter((item) => item.meetLink)
+  const unreadCount = filteredNotifications.length
 
   return (
-    <div className="max-w-3xl mx-auto mt-10 px-4">
-      <h1 className="text-2xl font-bold mb-6">Notifications</h1>
+    <DashboardShell>
+      <DashboardHeader heading="Notifications" text={`You have ${unreadCount} unread notifications`}>
+        <Button>
+          <Bell className="mr-2 h-4 w-4" />
+          Mark All Read
+        </Button>
+      </DashboardHeader>
 
-      {loading && <p className="text-gray-500 dark:text-gray-400">Loading notifications...</p>}
-
-      {error && <p className="text-red-600">{error}</p>}
-
-      {!loading && !error && filteredNotifications.length === 0 && (
-        <p className="text-gray-500 dark:text-gray-400">No notifications available.</p>
-      )}
-
-      {!loading && !error && filteredNotifications.map((item) => {
-        const tutorName = `${item.tutorId.firstName} ${item.tutorId.lastName}`
-        const timeAgo = formatDistanceToNow(new Date(item.createdAt), { addSuffix: true })
-
-        return (
-          <Card key={item._id} className="mb-4 border border-gray-200 dark:border-gray-700 shadow-sm">
-            <CardContent className="p-5 space-y-2">
-              <p className="text-sm text-gray-400">{timeAgo}</p>
-
-              <h2 className="text-md font-medium text-gray-800 dark:text-gray-200">
-                📣 Booked demo classes
-              </h2>
-
-              <p className="text-gray-700 dark:text-gray-300">
-                👩‍🏫 <span className="font-medium">Tutor:</span> {tutorName}
-              </p>
-
-              <p className="text-gray-700 dark:text-gray-300">
-                📘 <span className="font-medium">Subject:</span> {item.subject}
-              </p>
-
-              <p>
-                {/* finalDate must be rendered here */}
-                📅 <span className="font-medium">Date:</span> {new Date(item.finalDate).toLocaleDateString()}
-              </p>
-
-              {item.meetLink && (
-                <p className="text-blue-600 dark:text-blue-400">
-                  🔗 <Link href={item.meetLink} target="_blank" className="underline">Join Meet</Link>
-                </p>
-              )}
+      <div className="space-y-4">
+        {loading && (
+          <Card>
+            <CardContent className="p-6">
+              <p className="text-gray-500 dark:text-gray-400">Loading notifications...</p>
             </CardContent>
           </Card>
-        )
-      })}
-    </div>
+        )}
+
+        {error && (
+          <Card>
+            <CardContent className="p-6">
+              <p className="text-red-600">{error}</p>
+            </CardContent>
+          </Card>
+        )}
+
+        {!loading && !error && filteredNotifications.length === 0 && (
+          <Card>
+            <CardContent className="p-6">
+              <p className="text-gray-500 dark:text-gray-400">No notifications available.</p>
+            </CardContent>
+          </Card>
+        )}
+
+        {!loading && !error && filteredNotifications.map((item) => {
+          const tutorName = `${item.tutorId.firstName} ${item.tutorId.lastName}`
+          const timeAgo = formatDistanceToNow(new Date(item.createdAt), { addSuffix: true })
+
+          return (
+            <Card key={item._id} className="border border-gray-200 dark:border-gray-700 shadow-sm">
+              <CardContent className="p-5 space-y-2">
+                <p className="text-sm text-muted-foreground">{timeAgo}</p>
+
+                <h2 className="text-md font-medium">
+                  📣 Booked demo classes
+                </h2>
+
+                <p className="text-gray-700 dark:text-gray-300">
+                  👩‍🏫 <span className="font-medium">Tutor:</span> {tutorName}
+                </p>
+
+                <p className="text-gray-700 dark:text-gray-300">
+                  📘 <span className="font-medium">Subject:</span> {item.subject}
+                </p>
+
+                <p className="text-gray-700 dark:text-gray-300">
+                  📅 <span className="font-medium">Date:</span> {new Date(item.finalDate).toLocaleDateString()}
+                </p>
+
+                {item.meetLink && (
+                  <p className="text-blue-600 dark:text-blue-400">
+                    🔗 <Link href={item.meetLink} target="_blank" className="underline">Join Meet</Link>
+                  </p>
+                )}
+              </CardContent>
+            </Card>
+          )
+        })}
+
+        {!loading && !error && filteredNotifications.length > 0 && (
+          <Button variant="outline" className="w-full">
+            View All Notifications
+          </Button>
+        )}
+      </div>
+    </DashboardShell>
   )
 }

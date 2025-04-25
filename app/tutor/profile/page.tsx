@@ -1,10 +1,23 @@
+import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
+import { User } from "lucide-react"
+import { DashboardHeader } from "@/app/dashboard/dashboard-header"
+import { DashboardShell } from "@/app/dashboard/dashboard-shell"
 import { TutorProfileForm } from "@/components/tutor/profile-form"
 
 export default function TutorProfilePage() {
   return (
-    <div className="container py-10">
-      <h1 className="text-3xl font-bold mb-6">Tutor Profile</h1>
-      <TutorProfileForm />
-    </div>
+    <DashboardShell>
+      <DashboardHeader heading="Tutor Profile" text="Manage your personal and professional information">
+        <Button>
+          <User className="mr-2 h-4 w-4" />
+          Preview Profile
+        </Button>
+      </DashboardHeader>
+      
+      <Card className="p-6">
+        <TutorProfileForm />
+      </Card>
+    </DashboardShell>
   )
 }
