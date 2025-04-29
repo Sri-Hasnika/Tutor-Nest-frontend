@@ -68,18 +68,18 @@ export default function TutorDashboardPage() {
             {[
               {
                 subject: "Advanced Calculus",
-                student: "Alex Thompson",
+                student: "Jamie Wilson",
                 date: "Today",
                 time: "4:00 PM - 5:30 PM",
-                image: "/placeholder.svg?height=40&width=40",
+                image: "https://img.freepik.com/premium-photo/indian-girls-sitting-with-laptop-isolated-white_621325-2267.jpg?uid=R170200228&ga=GA1.1.2064536539.1745487729&semt=ais_hybrid&w=740",
                 status: "Confirmed"
               },
               {
                 subject: "Physics Mechanics",
-                student: "Jamie Wilson",
+                student: "Alex Thompson",
                 date: "Today",
                 time: "6:00 PM - 7:00 PM",
-                image: "/placeholder.svg?height=40&width=40",
+                image: "https://img.freepik.com/premium-photo/indian-young-man-with-backpack-white-background_665346-8807.jpg?uid=R170200228&ga=GA1.1.2064536539.1745487729&semt=ais_hybrid&w=740",
                 status: "Pending"
               },
               {
@@ -87,7 +87,7 @@ export default function TutorDashboardPage() {
                 student: "Sam Rodriguez",
                 date: "Today",
                 time: "8:00 PM - 9:30 PM",
-                image: "/placeholder.svg?height=40&width=40",
+                image: "https://img.freepik.com/free-photo/happy-young-female-student-holding-notebooks-from-courses-smiling-camera-standing-spring-clothes-against-blue-background_1258-70161.jpg?uid=R170200228&ga=GA1.1.2064536539.1745487729&semt=ais_hybrid&w=740",
                 status: "Confirmed"
               },
             ].map((session, index) => (
