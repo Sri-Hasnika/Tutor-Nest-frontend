@@ -75,12 +75,15 @@ export function DashboardNav() {
 
   return (
     <nav className="flex flex-col gap-1 p-4">
-      <NavLink href="/dashboard" icon={Home}>
+      {/* <NavLink href="/dashboard" icon={Home}>
         Dashboard
-      </NavLink>
+      </NavLink> */}
       
       {isTutee && (
         <>
+          <NavLink href="/dashboard" icon={Home}>
+            Dashboard
+          </NavLink>
           <div className="mt-6 mb-2 px-3">
             <p className="text-xs font-medium text-muted-foreground">Learning</p>
           </div>
@@ -90,11 +93,26 @@ export function DashboardNav() {
           <NavLink href="/dashboard/find-tutors" icon={Search}>
             Find Tutors
           </NavLink>
+          <div className="mt-6 mb-2 px-3">
+            <p className="text-xs font-medium text-muted-foreground">General</p>
+          </div>
+          <NavLink href="/dashboard/schedule" icon={Calendar}>
+            Schedule
+          </NavLink>
+          <NavLink href="/dashboard/notifications" icon={MessageSquare}>
+            Notifications
+          </NavLink>
+          <NavLink href="/dashboard/profile" icon={User}>
+            Profile
+          </NavLink>
         </>
       )}
       
       {isTutor && (
         <>
+          <NavLink href="/tutor/dashboard" icon={Home}>
+            Dashboard
+          </NavLink>
           <div className="mt-6 mb-2 px-3">
             <p className="text-xs font-medium text-muted-foreground">Teaching</p>
           </div>
@@ -110,10 +128,16 @@ export function DashboardNav() {
           <NavLink href="/tutor/sessions" icon={Users}>
             Sessions
           </NavLink>
+          <div className="mt-6 mb-2 px-3">
+            <p className="text-xs font-medium text-muted-foreground">General</p>
+          </div>
+          <NavLink href="/tutor/notifications" icon={MessageSquare}>
+            Notifications
+          </NavLink>
         </>
       )}
       
-      <div className="mt-6 mb-2 px-3">
+      {/* <div className="mt-6 mb-2 px-3">
         <p className="text-xs font-medium text-muted-foreground">General</p>
       </div>
       <NavLink href="/dashboard/schedule" icon={Calendar}>
@@ -122,12 +146,12 @@ export function DashboardNav() {
       <NavLink href="/dashboard/notifications" icon={MessageSquare}>
         Notifications
       </NavLink>
-      
-      {!isTutor && (
+       */}
+      {/* {!isTutor && (
         <NavLink href="/dashboard/profile" icon={User}>
           Profile
         </NavLink>
-      )}
+      )} */}
       
       <div className="mt-auto pt-6">
         <NavLink href="/dashboard/about" icon={Settings}>

@@ -16,12 +16,27 @@ export function DashboardShell({ children }: DashboardShellProps) {
   const [home, setHome] = useState<any>("/");
   const router = useRouter();
 
+  const [role,setRole] = useState<any>("");
+
+  const [profileUrl,setProfileUrl] = useState<any>("");
+
+
+  useEffect(()=>{
+    const r= localStorage.getItem("role");
+    setRole(r);
+    if(role==="tutor"){
+      setProfileUrl("/tutor/profile");
+    }else{
+      setProfileUrl("/dashboard/profile");
+    }
+  })
+
   const getCurUser = () => {
     const user = JSON.parse(localStorage.getItem("user") || "null");
     if (!user) return;
     setCurUser(user);
     const role = localStorage.getItem("role") || "tutee";
-    setHome(role === "tutor" ? "/dashboard/tutor/profile" : "/dashboard");
+    setHome(role === "tutor" ? "/tutor/dashboard" : "/dashboard");
   }
 
   useEffect(() => {
@@ -72,7 +87,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
               </svg>
               <span className="sr-only">Notifications</span>
             </Link>
-            <Link href="/dashboard/profile" className="flex items-center gap-3 transition-transform hover:scale-105">
+            <Link href={profileUrl} className="flex items-center gap-3 transition-transform hover:scale-105">
               <div className="relative flex h-9 w-9 shrink-0 overflow-hidden rounded-full bg-gradient-to-br from-blue-500 to-purple-500 shadow-md">
                 <div className="flex h-full w-full items-center justify-center text-sm font-semibold text-white">
                   {getInitials(curUser?.firstName, curUser?.lastName)}

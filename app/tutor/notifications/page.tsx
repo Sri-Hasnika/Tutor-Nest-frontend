@@ -37,13 +37,23 @@ const DemoClasses: React.FC = () => {
   const [updatedLinks, setUpdatedLinks] = useState<{ [key: string]: string }>({});
   const [updatedFinalDates, setUpdatedFinalDates] = useState<{ [key: string]: string }>({});
 
-  const tutorId = localStorage.getItem("tId");
+  const [tutorId, setTutorId] = useState<any>("");
 
   useEffect(() => {
+    const tId = JSON.parse(localStorage.getItem("user") || "{}")._id;
+    setTutorId(tId);
+  }, []);
+
+  useEffect(() => {
+    if(!tutorId) return;
+    // fetchTutorId();
     const fetchDemoClasses = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/tutor-api/demo-class/${tutorId}`);
-        setDemoClasses(response.data.payload);
+        console.log(tutorId)
+        const response = await fetch(`http://localhost:8000/tutor-api/demo-class/${tutorId}`);
+        const data = await response.json();
+        console.log(data);
+        setDemoClasses(data.payload);
         setLoading(false);
       } catch (err) {
         setError("Failed to fetch demo classes.");
