@@ -17,7 +17,7 @@ export default function Home() {
     if (role === "tutee") {
       router.replace("/dashboard")
     } else if (role === "tutor") {
-      router.replace("/dashboard/tutor/profile")
+      router.replace("/tutor/dashboard")
     } else {
       setCheckingAuth(false)
     }

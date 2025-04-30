@@ -116,6 +116,9 @@ export function DashboardNav() {
           <div className="mt-6 mb-2 px-3">
             <p className="text-xs font-medium text-muted-foreground">Teaching</p>
           </div>
+          <NavLink href="/tutor/sessionPlans" icon={BookOpen}>
+            SessionPlans
+          </NavLink>
           <NavLink href="/tutor/earnings" icon={DollarSign}>
             Earnings
           </NavLink>

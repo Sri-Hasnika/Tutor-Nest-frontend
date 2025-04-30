@@ -48,22 +48,22 @@ export function SessionReportModal({ isOpen, onClose, session }: SessionReportMo
           <div className="grid grid-cols-2 gap-4 text-sm">
             <div>
               <Label className="text-muted-foreground">Tutee</Label>
-              <p className="font-medium">{session.tuteeName}</p>
+              <p className="font-medium">{session?.tuteeName}</p>
             </div>
 
             <div>
               <Label className="text-muted-foreground">Subject</Label>
-              <p className="font-medium">{session.subject}</p>
+              <p className="font-medium">{session?.subject}</p>
             </div>
 
             <div>
               <Label className="text-muted-foreground">Date</Label>
-              <p className="font-medium">{formatDate(session.date)}</p>
+              <p className="font-medium">{formatDate(session?.date)}</p>
             </div>
 
             <div>
               <Label className="text-muted-foreground">Time</Label>
-              <p className="font-medium">{session.time}</p>
+              <p className="font-medium">{session?.time}</p>
             </div>
           </div>
 
