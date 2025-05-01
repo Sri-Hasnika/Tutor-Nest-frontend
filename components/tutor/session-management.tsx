@@ -4,67 +4,128 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Clock, Video /*, X, Check*/ } from "lucide-react"
-import { AvailabilityGrid } from "./availability-grid"
-import { SessionReportModal } from "./session-report-modal"
-import { BookSessionModal } from "./book-session-modal"
-import { RescheduleModal } from "./reschedule-modal"
+import { Clock, Video, CalendarIcon, BookOpen } from "lucide-react"
+import { DashboardHeader } from "@/app/dashboard/dashboard-header"
 import { useRouter } from "next/navigation"
+import { AddSessionModal } from "./add-session-modal"
+import { format } from "date-fns"
 
 export function SessionManagement() {
   const [date, setDate] = useState<Date | undefined>(new Date())
-  const [demoBookings, setDemoBookings] = useState<any[]>([])
-  const [isReportModalOpen, setIsReportModalOpen] = useState(false)
-  const [isBookModalOpen, setIsBookModalOpen] = useState(false)
-  const [isRescheduleModalOpen, setIsRescheduleModalOpen] = useState(false)
-  const [selectedSession, setSelectedSession] = useState<any>(null)
+  const [sessions, setSessions] = useState<any[]>([])
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false)
+  const [sessionPlans, setSessionPlans] = useState<any[]>([])
+  const [isLoading, setIsLoading] = useState(true)
 
-  const router = useRouter();
+  const router = useRouter()
 
   const tutor = typeof window !== "undefined" ? JSON.parse(localStorage.getItem("user") || "{}") : null
   const tutorId = tutor?._id
 
-  // Fetch all demo-class bookings whenever tutorId changes
+  // Fetch all session plans for this tutor
   useEffect(() => {
     if (!tutorId) return
-    fetch(`http://localhost:8000/tutor-api/demo-class/${tutorId}`)
-      .then(res => res.json())
-      .then(data => {
-        // assume data.payload is the array of bookings
-        setDemoBookings(data.payload || [])
-      })
-      .catch(console.error)
+
+    const fetchSessionPlans = async () => {
+      try {
+        const res = await fetch(`http://localhost:8000/sessionPlan-api/?tutorId=${tutorId}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        })
+        const data = await res.json()
+        if (data.payload.length > 0) {
+          setSessionPlans(data.payload || [])
+        }
+      } catch (error) {
+        console.error("Error fetching session plans:", error)
+      }
+    }
+
+    fetchSessionPlans()
   }, [tutorId])
 
-  // filter bookings by selected date (year-month-day)
-  const selectedDateKey = date?.toISOString().slice(0,10)
-  const todaysBookings = demoBookings.filter(b => 
-    b.createdAt.slice(0,10) === selectedDateKey
-  )
+  // Fetch all sessions whenever tutorId or date changes
+  useEffect(() => {
+    if (!tutorId || !date) return
 
-  const handleOpenReportModal = (session: any) => {
-    setSelectedSession(session)
-    setIsReportModalOpen(true)
-  }
-  const handleOpenRescheduleModal = (session: any) => {
-    setSelectedSession(session)
-    setIsRescheduleModalOpen(true)
-  }
+    setIsLoading(true)
+    const formattedDate = format(date, "yyyy-MM-dd")
+
+    fetch(`http://localhost:8000/session-api/tutor/${tutorId}?date=${formattedDate}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.payload.length > 0) {
+          setSessions(data.payload || [])
+        }
+        setIsLoading(false)
+      })
+      .catch((error) => {
+        console.error("Error fetching sessions:", error)
+        setIsLoading(false)
+      })
+  }, [tutorId, date])
+
   const handleJoinSession = (link: string) => {
     window.open(link, "_blank")
   }
 
-  // const handleAcceptBooking = (id: string) => { /* ... */ }
-  // const handleRejectBooking = (id: string) => { /* ... */ }
+  const handleAddSession = async (newSession: any) => {
+    try {
+      const res = await fetch("http://localhost:8000/session-api/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({
+          ...newSession,
+          tutorId,
+        }),
+      })
+
+      const data = await res.json()
+      console.log(data);
+
+      if (data.status===201) {
+        // Refresh sessions list
+        const formattedDate = format(date!, "yyyy-MM-dd")
+        const sessionsRes = await fetch(`http://localhost:8000/session-api/tutor/${tutorId}?date=${formattedDate}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        })
+        const sessionsData = await sessionsRes.json()
+
+        if (sessionsData.payload.length > 0) {
+          setSessions(sessionsData.payload || [])
+        }
+
+        setIsAddModalOpen(false)
+      }
+    } catch (error) {
+      console.error("Error adding session:", error)
+    }
+  }
+  const getInitials = (firstName?: string, lastName?: string) => {
+    if (!firstName && !lastName) return "U";
+    return `${firstName?.[0] || ""}${lastName?.[0] || ""}`.toUpperCase();
+  };
+
+  const formattedDate = date ? format(date, "MM/dd/yyyy") : ""
 
   return (
     <div className="space-y-8">
-      {/* <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold">Session Management</h1>
-        <Button onClick={() => setIsBookModalOpen(true)}>
-          Book Session
+      <DashboardHeader heading="Session Management" text="Schedule, organize, and track your tutoring sessions">
+        <Button onClick={() => setIsAddModalOpen(true)}>
+          <CalendarIcon className="mr-2 h-4 w-4" />
+          Add New Session
         </Button>
-      </div> */}
+      </DashboardHeader>
 
       <div className="grid gap-6 md:grid-cols-2">
         <Card className="col-span-1">
@@ -78,91 +139,51 @@ export function SessionManagement() {
         </Card>
 
         <div className="col-span-1 space-y-8">
-          {/* Today's Demo-Class Bookings */}
-          <Card onClick={()=>{router.push("/tutor/notifications")}} className="hover:cursor-pointer">
+          <Card>
             <CardHeader>
-              <CardTitle>Bookings on {date?.toLocaleDateString()}</CardTitle>
+              <CardTitle>Sessions on {formattedDate}</CardTitle>
               <CardDescription>Filtered by selected date</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              {todaysBookings.length > 0 ? (
-                todaysBookings.map((b) => (
-                  <div key={b._id} className="flex items-start space-x-4 rounded-md border p-3">
-                    <img
-                      src={b.tuteeId.profileImage || "/placeholder.svg"}
-                      alt={`${b.tuteeId.firstName} ${b.tuteeId.lastName}`}
-                      width={40}
-                      height={40}
-                      className="rounded-full"
-                    />
+              {isLoading ? (
+                <p className="text-center py-4 text-muted-foreground">Loading sessions...</p>
+              ) : sessions.length > 0 ? (
+                sessions.map((session) => (
+                  <div key={session._id} className="flex items-start space-x-4 rounded-md border p-3">
+                    <BookOpen/>
                     <div className="flex-1 space-y-1">
-                      <p className="font-medium leading-none">{b.subject}</p>
+                      <p className="font-medium leading-none">{session.title}</p>
+                      <p className="text-sm text-muted-foreground">Topic: {session.topic}</p>
                       <p className="text-sm text-muted-foreground">
-                        with {b.tuteeId.firstName} {b.tuteeId.lastName}
+                        with {session.tuteeId?.firstName || "Tutee"} {session.tuteeId?.lastName || ""}
                       </p>
                       <div className="flex items-center pt-2">
                         <Clock className="mr-1 h-3 w-3 text-muted-foreground" />
                         <span className="text-xs text-muted-foreground">
-                          {new Date(b.createdAt).toLocaleTimeString()}
+                          {new Date(session.scheduledTime).toLocaleTimeString()}
                         </span>
                       </div>
                     </div>
-                    {b.status === "pending" && (
-                      <div className="flex flex-col gap-2">
-                        {/* 
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          className="border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700"
-                          onClick={() => handleRejectBooking(b._id)}
-                        >
-                          <X className="mr-1 h-3 w-3" />
-                          Reject
-                        </Button>
-                        <Button size="sm" onClick={() => handleAcceptBooking(b._id)}>
-                          <Check className="mr-1 h-3 w-3" />
-                          Accept
-                        </Button>
-                        */}
-                      </div>
-                    )}
-                    {b.status === "accepted" && (
-                      <Button size="sm" onClick={() => handleJoinSession(b.meetLink)}>
-                        <Video className="mr-1 h-3 w-3" />
-                        Join
-                      </Button>
-                    )}
+                    <Button size="sm" onClick={() => handleJoinSession(session.meetLink)}>
+                      <Video className="mr-1 h-3 w-3" />
+                      Join
+                    </Button>
                   </div>
                 ))
               ) : (
-                <p className="text-center py-4 text-muted-foreground">No bookings for this date</p>
+                <p className="text-center py-4 text-muted-foreground">No sessions for this date</p>
               )}
             </CardContent>
           </Card>
         </div>
       </div>
 
-      <Card className="mt-6">
-        <CardHeader>
-          <CardTitle>Weekly Availability</CardTitle>
-          <CardDescription>Set your available time slots for bookings</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <AvailabilityGrid />
-        </CardContent>
-      </Card>
-{/* 
-      <SessionReportModal
-        isOpen={isReportModalOpen}
-        onClose={() => setIsReportModalOpen(false)}
-        session={selectedSession}
-      /> */}
-      <BookSessionModal isOpen={isBookModalOpen} onClose={() => setIsBookModalOpen(false)} />
-      {/* <RescheduleModal
-        isOpen={isRescheduleModalOpen}
-        onClose={() => setIsRescheduleModalOpen(false)}
-        session={selectedSession}
-      /> */}
+      <AddSessionModal
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+        onSubmit={handleAddSession}
+        sessionPlans={sessionPlans}
+      />
     </div>
   )
 }

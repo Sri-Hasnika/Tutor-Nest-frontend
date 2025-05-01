@@ -10,7 +10,8 @@ import {
   User, 
   DollarSign, 
   LineChart, 
-  Users 
+  Users, 
+  Video
 } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useState } from "react"
@@ -92,6 +93,9 @@ export function DashboardNav() {
           </NavLink>
           <NavLink href="/dashboard/find-tutors" icon={Search}>
             Find Tutors
+          </NavLink>
+          <NavLink href="/dashboard/sessions" icon={Video}>
+            Sessions
           </NavLink>
           <div className="mt-6 mb-2 px-3">
             <p className="text-xs font-medium text-muted-foreground">General</p>
