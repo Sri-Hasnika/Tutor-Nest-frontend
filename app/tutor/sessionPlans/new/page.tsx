@@ -26,26 +26,36 @@ const NewSessionPlanPage: React.FC = () => {
   const [course, setCourse] = useState<string>('');
   const [studentClass, setStudentClass] = useState<string>('');
 
-  const tutorId = JSON.parse(localStorage.getItem("user") || "{}")._id;
+const [tutorId, setTutorId] = useState<string>('');
 
-  useEffect(() => {
-    const fetchTutees = async () => {
-      try {
-        const response = await axios.get(`https://tutor-nest-backend.onrender.com/tutor-api/${tutorId}/tutees`);
-        console.log("Tutees response:", response.data.payload);
-        setTutees(response.data.payload);
-        if (response.data.payload.length > 0) {
-          setTuteeId(response.data.payload[0]._id);
-        }
-      } catch (err) {
-        setError('Failed to load tutees.');
-      }
-    };
-
-    if (tutorId) {
-      fetchTutees();
+useEffect(() => {
+  const storedUser = localStorage.getItem("user");
+  if (storedUser) {
+    const parsedUser = JSON.parse(storedUser);
+    if (parsedUser._id) {
+      setTutorId(parsedUser._id);
     }
-  }, [tutorId]);
+  }
+}, []);
+
+useEffect(() => {
+  const fetchTutees = async () => {
+    try {
+      const response = await axios.get(`https://tutor-nest-backend.onrender.com/tutor-api/${tutorId}/tutees`);
+      console.log("Tutees response:", response.data.payload);
+      setTutees(response.data.payload);
+      if (response.data.payload.length > 0) {
+        setTuteeId(response.data.payload[0]._id);
+      }
+    } catch (err) {
+      setError('Failed to load tutees.');
+    }
+  };
+
+  if (tutorId) {
+    fetchTutees();
+  }
+}, [tutorId]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
