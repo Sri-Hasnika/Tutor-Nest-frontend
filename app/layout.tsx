@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import { AuthProvider } from '../src/contexts/AuthContext'
 
 export const metadata: Metadata = {
   title: 'Tutor Nest',
@@ -14,11 +13,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-        <AuthProvider>
-          {children}
-        </AuthProvider>
-      </body>
+      <body>{children}</body>
     </html>
   )
 }

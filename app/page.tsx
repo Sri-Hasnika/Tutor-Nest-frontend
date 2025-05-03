@@ -96,7 +96,7 @@ export default function Home() {
                   height="500px"
                   style={{ border: 'none' }}
                 ></iframe>
-                <div className="absolute bottom-2 right-2 bg-white/80 px-2 py-1 text-xs font-medium rounded shadow-md z-10">
+                <div className="absolute bottom-5 right-5 bg-white px-12 py-3 text-xs font-medium rounded-lg shadow-md z-10">
                   Tutor Nest
                 </div>
               </div>
