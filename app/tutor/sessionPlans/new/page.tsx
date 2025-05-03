@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { DashboardShell } from '@/app/dashboard/dashboard-shell';
 import { DashboardHeader } from '@/app/dashboard/dashboard-header';
+import { CalendarDays, BookOpen, Clock, User, FileText, Pencil } from 'lucide-react';
 
 interface Tutee {
   _id: string;
@@ -90,113 +91,196 @@ useEffect(() => {
 
   return (
     <DashboardShell>
-      <DashboardHeader heading="New Session Plan" text="Create a new session plan for a tutee" />
-      <div className="p-6 max-w-3xl mx-auto bg-white shadow-lg rounded-xl">
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label htmlFor="tuteeId" className="block font-semibold mb-1">Select Tutee</label>
-            <select
-              id="tuteeId"
-              value={tuteeId}
-              onChange={(e) => setTuteeId(e.target.value)}
-              className="w-full px-3 py-2 border rounded-md"
-              required
-            >
-              {tutees.map((tutee) => (
-                <option key={tutee._id} value={tutee._id}>
-                  {tutee.firstName} {tutee.lastName}
-                </option>
-              ))}
-            </select>
+      <DashboardHeader 
+        heading="New Session Plan" 
+        text="Create a personalized learning schedule for your tutee" 
+      />
+      <div className="max-w-3xl mx-auto">
+        <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+          <div className="bg-black p-4 text-white">
+            <h2 className="text-xl font-bold flex items-center">
+              <FileText className="mr-2" size={20} />
+              Session Plan Details
+            </h2>
           </div>
-          <div>
-            <label htmlFor="course" className="block font-semibold mb-1">Course</label>
-            <input
-              type="text"
-              id="course"
-              value={course}
-              onChange={(e) => setCourse(e.target.value)}
-              className="w-full px-3 py-2 border rounded-md"
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="class" className="block font-semibold mb-1">Class</label>
-            <input
-              type="text"
-              id="class"
-              value={studentClass}
-              onChange={(e) => setStudentClass(e.target.value)}
-              className="w-full px-3 py-2 border rounded-md"
-              required
-            />
-          </div>
-
-          <div>
-            <label htmlFor="topics" className="block font-semibold mb-1">Topics (comma separated)</label>
-            <input
-              type="text"
-              id="topics"
-              value={topics}
-              onChange={(e) => setTopics(e.target.value)}
-              className="w-full px-3 py-2 border rounded-md"
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="daysPerWeek" className="block font-semibold mb-1">Days Per Week</label>
-            <input
-              type="number"
-              id="daysPerWeek"
-              value={daysPerWeek}
-              onChange={(e) => setDaysPerWeek(Number(e.target.value))}
-              min={1}
-              className="w-full px-3 py-2 border rounded-md"
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="timings" className="block font-semibold mb-1">Timings (comma separated, e.g. "10:00 AM - 11:00 AM")</label>
-            <input
-              type="text"
-              id="timings"
-              value={timings}
-              onChange={(e) => setTimings(e.target.value)}
-              className="w-full px-3 py-2 border rounded-md"
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="durationWeeks" className="block font-semibold mb-1">Duration (weeks)</label>
-            <input
-              type="number"
-              id="durationWeeks"
-              value={durationWeeks}
-              onChange={(e) => setDurationWeeks(Number(e.target.value))}
-              min={1}
-              className="w-full px-3 py-2 border rounded-md"
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="additionalNotes" className="block font-semibold mb-1">Additional Notes</label>
-            <textarea
-              id="additionalNotes"
-              value={additionalNotes}
-              onChange={(e) => setAdditionalNotes(e.target.value)}
-              className="w-full px-3 py-2 border rounded-md"
-              rows={3}
-            />
-          </div>
-          {error && <p className="text-red-600">{error}</p>}
-          <button
-            type="submit"
-            disabled={loading}
-            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
-          >
-            {loading ? 'Creating...' : 'Create Session Plan'}
-          </button>
-        </form>
+          
+          <form onSubmit={handleSubmit} className="p-6 space-y-6">
+            <div className="grid md:grid-cols-2 gap-6">
+              {/* Left Column */}
+              <div className="space-y-6">
+                <div className="space-y-2">
+                  <label htmlFor="tuteeId" className="flex items-center text-sm font-medium text-gray-700">
+                    <User className="mr-2" size={16} />
+                    Select Tutee
+                  </label>
+                  <select
+                    id="tuteeId"
+                    value={tuteeId}
+                    onChange={(e) => setTuteeId(e.target.value)}
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-700 focus:border-gray-700 transition duration-200"
+                    required
+                  >
+                    {tutees.map((tutee) => (
+                      <option key={tutee._id} value={tutee._id}>
+                        {tutee.firstName} {tutee.lastName}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                
+                <div className="space-y-2">
+                  <label htmlFor="course" className="flex items-center text-sm font-medium text-gray-700">
+                    <BookOpen className="mr-2" size={16} />
+                    Course
+                  </label>
+                  <input
+                    type="text"
+                    id="course"
+                    value={course}
+                    onChange={(e) => setCourse(e.target.value)}
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition duration-200"
+                    placeholder="e.g. Mathematics, Physics"
+                    required
+                  />
+                </div>
+                
+                <div className="space-y-2">
+                  <label htmlFor="class" className="flex items-center text-sm font-medium text-gray-700">
+                    <Pencil className="mr-2" size={16} />
+                    Class/Grade
+                  </label>
+                  <input
+                    type="text"
+                    id="class"
+                    value={studentClass}
+                    onChange={(e) => setStudentClass(e.target.value)}
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-700 focus:border-gray-700 transition duration-200"
+                    placeholder="e.g. Grade 10, AP Calculus"
+                    required
+                  />
+                </div>
+              </div>
+              
+              {/* Right Column */}
+              <div className="space-y-6">
+                <div className="space-y-2">
+                  <label htmlFor="topics" className="flex items-center text-sm font-medium text-gray-700">
+                    <BookOpen className="mr-2" size={16} />
+                    Topics (comma separated)
+                  </label>
+                  <input
+                    type="text"
+                    id="topics"
+                    value={topics}
+                    onChange={(e) => setTopics(e.target.value)}
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-700 focus:border-gray-700 transition duration-200"
+                    placeholder="e.g. Algebra, Geometry, Calculus"
+                    required
+                  />
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <label htmlFor="daysPerWeek" className="flex items-center text-sm font-medium text-gray-700">
+                      <CalendarDays className="mr-2" size={16} />
+                      Days Per Week
+                    </label>
+                    <input
+                      type="number"
+                      id="daysPerWeek"
+                      value={daysPerWeek}
+                      onChange={(e) => setDaysPerWeek(Number(e.target.value))}
+                      min={1}
+                      max={7}
+                      className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-700 focus:border-gray-700 transition duration-200"
+                      required
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <label htmlFor="durationWeeks" className="flex items-center text-sm font-medium text-gray-700">
+                      <CalendarDays className="mr-2" size={16} />
+                      Duration (weeks)
+                    </label>
+                    <input
+                      type="number"
+                      id="durationWeeks"
+                      value={durationWeeks}
+                      onChange={(e) => setDurationWeeks(Number(e.target.value))}
+                      min={1}
+                      className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-700 focus:border-gray-700 transition duration-200"
+                      required
+                    />
+                  </div>
+                </div>
+                
+                <div className="space-y-2">
+                  <label htmlFor="timings" className="flex items-center text-sm font-medium text-gray-700">
+                    <Clock className="mr-2" size={16} />
+                    Timings (comma separated)
+                  </label>
+                  <input
+                    type="text"
+                    id="timings"
+                    value={timings}
+                    onChange={(e) => setTimings(e.target.value)}
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-700 focus:border-gray-700 transition duration-200"
+                    placeholder="e.g. 10:00 AM - 11:00 AM, 4:00 PM - 5:00 PM"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+            
+            <div className="space-y-2">
+              <label htmlFor="additionalNotes" className="flex items-center text-sm font-medium text-gray-700">
+                <FileText className="mr-2" size={16} />
+                Additional Notes
+              </label>
+              <textarea
+                id="additionalNotes"
+                value={additionalNotes}
+                onChange={(e) => setAdditionalNotes(e.target.value)}
+                className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-700 focus:border-gray-700 transition duration-200"
+                rows={4}
+                placeholder="Enter any additional information or special requirements for this session plan"
+              />
+            </div>
+            
+            {error && (
+              <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded">
+                <p className="text-red-700 font-medium">{error}</p>
+              </div>
+            )}
+            
+            <div className="flex justify-end pt-4">
+              <button
+                type="button"
+                onClick={() => router.push('/tutor/sessionPlans')}
+                className="px-6 py-3 mr-4 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition duration-200"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                disabled={loading}
+                className="px-6 py-3 bg-gray-700 text-white rounded-lg hover:bg-gray-900 shadow-md transition duration-200 flex items-center"
+              >
+                {loading ? (
+                  <>
+                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Creating...
+                  </>
+                ) : (
+                  'Create Session Plan'
+                )}
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </DashboardShell>
   );
