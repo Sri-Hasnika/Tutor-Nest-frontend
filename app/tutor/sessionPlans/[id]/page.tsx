@@ -45,7 +45,7 @@ const SessionPlanDetailPage: React.FC = () => {
     const fetchSessionPlan = async () => {
       try {
         console.log("Fetching session plan with id:", id);
-        const response = await axios.get(`http://localhost:8000/sessionPlan-api/${id}`);
+        const response = await axios.get(`https://tutor-nest-backend.onrender.com/sessionPlan-api/${id}`);
         console.log("Response from backend:", response);
         if (response.data && response.data.payload) {
           setSessionPlan(response.data.payload);

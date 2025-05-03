@@ -98,7 +98,7 @@ export function TutorProfileForm() {
     }
 
     try {
-      const res = await fetch(`http://localhost:8000/tutor-api/tutor/${tutorId}`, {
+      const res = await fetch(`https://tutor-nest-backend.onrender.com/tutor-api/tutor/${tutorId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

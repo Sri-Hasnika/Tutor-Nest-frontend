@@ -40,7 +40,7 @@ const DemoClassBookingPage: React.FC = () => {
     setErrorMessage(null);
 
     try {
-      const response = await fetch('http://localhost:8000/tutee-api/demo-class/book', {
+      const response = await fetch('https://tutor-nest-backend.onrender.com/tutee-api/demo-class/book', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

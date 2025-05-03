@@ -43,7 +43,7 @@ export default function ProfilePage() {
     };
   
     try {
-      const response = await fetch(`http://localhost:8000/tutee-api/update/${curUser?._id}`, {
+      const response = await fetch(`https://tutor-nest-backend.onrender.com/tutee-api/update/${curUser?._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

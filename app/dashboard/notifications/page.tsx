@@ -44,7 +44,7 @@ export default function TutorNotificationsPage() {
       setLoading(true)
       setError(null)
       try {
-        const response = await fetch(`http://localhost:8000/tutee-api/demo-class/booked/${tuteeId}`)
+        const response = await fetch(`https://tutor-nest-backend.onrender.com/tutee-api/demo-class/booked/${tuteeId}`)
         if (!response.ok) {
           throw new Error('Failed to fetch notifications')
         }

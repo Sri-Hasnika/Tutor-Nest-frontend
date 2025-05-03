@@ -65,7 +65,7 @@ export default function RegisterPage() {
       Object.entries(formData).filter(([key]) => key !== 'role' && key !== 'confirmPassword')
     );
 
-    const response = await fetch(`http://localhost:8000/${formData.role}-api/signIn`, {
+    const response = await fetch(`https://tutor-nest-backend.onrender.com/${formData.role}-api/signIn`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

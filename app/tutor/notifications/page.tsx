@@ -55,7 +55,7 @@ const DemoClasses: React.FC = () => {
     if(!tutorId) return;
     const fetchDemoClasses = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/tutor-api/demo-class/${tutorId}`);
+        const response = await fetch(`https://tutor-nest-backend.onrender.com/tutor-api/demo-class/${tutorId}`);
         const data = await response.json();
         setDemoClasses(data.payload);
         setLoading(false);
@@ -85,7 +85,7 @@ const DemoClasses: React.FC = () => {
 
     try {
       await axios.put(
-        `http://localhost:8000/tutor-api/demo-class/${classItem.tutorId}/${classItem._id}`,
+        `https://tutor-nest-backend.onrender.com/tutor-api/demo-class/${classItem.tutorId}/${classItem._id}`,
         { meetLink, finalDate },
         { headers: { "Content-Type": "application/json" } }
       );
@@ -113,7 +113,7 @@ const DemoClasses: React.FC = () => {
   const handleAssignTutee = async () => {
     if (!selectedTutee || !tutorId) return;
     try {
-      await axios.put(`http://localhost:8000/tutor-api/${tutorId}/tutees/${selectedTutee}`);
+      await axios.put(`https://tutor-nest-backend.onrender.com/tutor-api/${tutorId}/tutees/${selectedTutee}`);
       setShowAcceptPopup(false);
       fetchSessionPlan(selectedTutee);
     } catch (err) {
@@ -125,7 +125,7 @@ const DemoClasses: React.FC = () => {
     setLoadingSessionPlan(true);
     setSessionPlanError(null);
     try {
-      const response = await fetch(`http://localhost:8000/sessionPlan-api?tutorId=${tutorId}&tuteeId=${tuteeId}`);
+      const response = await fetch(`https://tutor-nest-backend.onrender.com/sessionPlan-api?tutorId=${tutorId}&tuteeId=${tuteeId}`);
       const data = await response.json();
       if (response.ok) {
         if (data.payload && data.payload.length > 0) {
