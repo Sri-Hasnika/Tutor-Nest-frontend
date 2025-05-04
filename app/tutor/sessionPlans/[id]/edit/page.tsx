@@ -45,7 +45,7 @@ const EditSessionPlanPage: React.FC = () => {
 
     const fetchSessionPlan = async () => {
       try {
-        const response = await axios.get(`https://tutor-nest-backend.onrender.com/sessionPlan-api/${id}`);
+        const response = await axios.get(`http://localhost:8000/sessionPlan-api/${id}`);
         const plan = response.data.payload;
         setSessionPlan(plan);
         setTopics(plan.topics.join(', '));
@@ -75,7 +75,7 @@ const EditSessionPlanPage: React.FC = () => {
     const timingsArray = timings.split(',').map(time => time.trim());
 
     try {
-        await axios.put(`https://tutor-nest-backend.onrender.com/sessionPlan-api/${id}`, {
+        await axios.put(`http://localhost:8000/sessionPlan-api/${id}`, {
           tutorId: sessionPlan?.tutorId,
           tuteeId: sessionPlan?.tuteeId && typeof sessionPlan.tuteeId === 'object' ? Object.assign({}, sessionPlan.tuteeId, { course, studying }) : undefined,
           topics: topicsArray,

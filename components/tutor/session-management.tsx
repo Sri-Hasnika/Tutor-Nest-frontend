@@ -28,7 +28,7 @@ export function SessionManagement() {
 
     const fetchSessionPlans = async () => {
       try {
-        const res = await fetch(`https://tutor-nest-backend.onrender.com/sessionPlan-api/?tutorId=${tutorId}`, {
+        const res = await fetch(`http://localhost:8000/sessionPlan-api/?tutorId=${tutorId}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -52,7 +52,7 @@ export function SessionManagement() {
     setIsLoading(true)
     const formattedDate = format(date, "yyyy-MM-dd")
 
-    fetch(`https://tutor-nest-backend.onrender.com/session-api/tutor/${tutorId}?date=${formattedDate}`, {
+    fetch(`http://localhost:8000/session-api/tutor/${tutorId}?date=${formattedDate}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
@@ -76,7 +76,7 @@ export function SessionManagement() {
 
   const handleAddSession = async (newSession: any) => {
     try {
-      const res = await fetch("https://tutor-nest-backend.onrender.com/session-api/", {
+      const res = await fetch("http://localhost:8000/session-api/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -94,7 +94,7 @@ export function SessionManagement() {
       if (data.status===201) {
         // Refresh sessions list
         const formattedDate = format(date!, "yyyy-MM-dd")
-        const sessionsRes = await fetch(`https://tutor-nest-backend.onrender.com/session-api/tutor/${tutorId}?date=${formattedDate}`, {
+        const sessionsRes = await fetch(`http://localhost:8000/session-api/tutor/${tutorId}?date=${formattedDate}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },

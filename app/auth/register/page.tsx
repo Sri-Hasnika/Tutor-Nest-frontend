@@ -28,7 +28,7 @@ export default function RegisterPage() {
     confirmPassword: "",
     mobileNumber: "",
     gender: "",
-    studying: "",
+    qualification: "",
     course: "",
     pincode: "",
     locality: "",
@@ -36,6 +36,7 @@ export default function RegisterPage() {
     state: "",
     role: "",
   });
+  const router = useRouter();
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -64,8 +65,9 @@ export default function RegisterPage() {
     const fd = Object.fromEntries(
       Object.entries(formData).filter(([key]) => key !== 'role' && key !== 'confirmPassword')
     );
+    console.log(fd);
 
-    const response = await fetch(`https://tutor-nest-backend.onrender.com/${formData.role}-api/signIn`, {
+    const response = await fetch(`http://localhost:8000/${formData.role}-api/signIn`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -73,7 +75,6 @@ export default function RegisterPage() {
       body: JSON.stringify(fd),
     });
 
-    const router = useRouter();
     
     if (!response.ok) {
       const errorData = await response.json();
@@ -131,7 +132,7 @@ export default function RegisterPage() {
         <div className="w-full h-full relative">
           <Image
             src="https://images.pexels.com/photos/4778611/pexels-photo-4778611.jpeg"
-            alt="Students studying together"
+            alt="Students qualification together"
             fill
             priority
             className="object-cover"
@@ -312,13 +313,13 @@ export default function RegisterPage() {
                   {formData.role === "tutee" && (
                     <>
                       <div className="space-y-2">
-                        <Label htmlFor="studying" className="flex items-center gap-2">
+                        <Label htmlFor="qualification" className="flex items-center gap-2">
                           <Book className="h-4 w-4 text-primary" />
-                          Currently Studying
+                          Currently qualification
                         </Label>
                         <Input
-                          id="studying"
-                          value={formData.studying}
+                          id="qualification"
+                          value={formData.qualification}
                           onChange={handleInputChange}
                           placeholder="e.g., High School"
                           required
@@ -344,13 +345,13 @@ export default function RegisterPage() {
                   {formData.role === "tutor" && (
                     <>
                       <div className="space-y-2">
-                        <Label htmlFor="studying" className="flex items-center gap-2">
+                        <Label htmlFor="qualification" className="flex items-center gap-2">
                           <GraduationCap className="h-4 w-4 text-primary" />
                           Qualification
                         </Label>
                         <Input
-                          id="studying"
-                          value={formData.studying}
+                          id="qualification"
+                          value={formData.qualification}
                           onChange={handleInputChange}
                           placeholder="e.g., Masters in Mathematics"
                           required

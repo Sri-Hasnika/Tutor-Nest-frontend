@@ -38,7 +38,7 @@ interface Progress {
   assessmentReports?: Report[];
 }
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://tutor-nest-backend.onrender.com';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
 export function ProgressTracker() {
   // State variables

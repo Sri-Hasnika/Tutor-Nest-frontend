@@ -51,7 +51,7 @@ export default function SchedulePage() {
         const tuteeID = user._id;
 
         // Fetch sessions from the API
-        const response = await fetch(`https://tutor-nest-backend.onrender.com/tutee-api/demo-class/booked/${tuteeID}`);
+        const response = await fetch(`http://localhost:8000/tutee-api/demo-class/booked/${tuteeID}`);
         
         if (!response.ok) {
           throw new Error(`API request failed with status ${response.status}`);

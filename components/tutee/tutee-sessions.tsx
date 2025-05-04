@@ -24,7 +24,7 @@ export function TuteeSessions() {
     setIsLoading(true)
     const formattedDate = format(date, "yyyy-MM-dd")
 
-    fetch(`https://tutor-nest-backend.onrender.com/session-api/tutee/${tuteeId}?date=${formattedDate}`)
+    fetch(`http://localhost:8000/session-api/tutee/${tuteeId}?date=${formattedDate}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {

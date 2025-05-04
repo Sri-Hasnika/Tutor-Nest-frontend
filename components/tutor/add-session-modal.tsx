@@ -38,7 +38,7 @@ export function AddSessionModal({ isOpen, onClose, onSubmit, sessionPlans }: Add
       if (!tutorId) return;
   
       try {
-        const response = await fetch(`https://tutor-nest-backend.onrender.com/tutor-api/${tutorId}/tutees`, {
+        const response = await fetch(`http://localhost:8000/tutor-api/${tutorId}/tutees`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },

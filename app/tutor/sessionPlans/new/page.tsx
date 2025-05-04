@@ -41,7 +41,7 @@ useEffect(() => {
 useEffect(() => {
   const fetchTutees = async () => {
     try {
-      const response = await axios.get(`https://tutor-nest-backend.onrender.com/tutor-api/${tutorId}/tutees`);
+      const response = await axios.get(`http://localhost:8000/tutor-api/${tutorId}/tutees`);
       console.log("Tutees response:", response.data.payload);
       setTutees(response.data.payload);
       if (response.data.payload.length > 0) {
@@ -66,7 +66,7 @@ useEffect(() => {
     const timingsArray = timings.split(',').map(time => time.trim());
 
     try {
-      await axios.post('https://tutor-nest-backend.onrender.com/sessionPlan-api/create', {
+      await axios.post('http://localhost:8000/sessionPlan-api/create', {
         tutorId,
         tuteeId,
         course,

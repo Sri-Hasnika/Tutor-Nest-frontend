@@ -113,7 +113,7 @@ export default function FindTutorsPage() {
   useEffect(() => {
     const fetchTutors = async () => {
       try {
-        const response = await fetch("https://tutor-nest-backend.onrender.com/tutor-api/tutor", {
+        const response = await fetch("http://localhost:8000/tutor-api/tutor", {
           method: "GET",
         });
         const data = await response.json();

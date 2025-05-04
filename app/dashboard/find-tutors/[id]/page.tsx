@@ -37,7 +37,7 @@ interface PageProps {
 }
 
 async function fetchTutor(tutorId: string): Promise<Tutor> {
-  const res = await fetch(`https://tutor-nest-backend.onrender.com/tutor-api/tutor/${tutorId}`, {
+  const res = await fetch(`http://localhost:8000/tutor-api/tutor/${tutorId}`, {
     cache: 'no-store',
   });
   if (!res.ok) {
