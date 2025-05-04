@@ -5,7 +5,14 @@ import { BookOpen, Calendar, Clock, DollarSign, MessageSquare, Users } from "luc
 import Image from "next/image"
 import { DashboardHeader } from "@/app/dashboard/dashboard-header"
 import { DashboardShell } from "@/app/dashboard/dashboard-shell"
-
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+const data = [
+  { name: 'Jan', earnings: 4000 },
+  { name: 'Feb', earnings: 3000 },
+  { name: 'Mar', earnings: 5000 },
+  { name: 'Apr', earnings: 4000 },
+  { name: 'May', earnings: 6000 },
+];
 export default function TutorDashboardPage() {
   return (
     <DashboardShell>
@@ -139,42 +146,42 @@ export default function TutorDashboardPage() {
                 subject: "Mathematics",
                 sessions: "12 completed",
                 nextSession: "Today, 4:00 PM",
-                image: "/placeholder.svg?height=100&width=100",
+                image: "https://img.freepik.com/free-photo/handsome-serious-bearded-young-guy-walks-along-harbor_273609-20546.jpg?uid=R170200228&ga=GA1.1.2064536539.1745487729&semt=ais_hybrid&w=740",
               },
               {
                 name: "Jamie Wilson",
                 subject: "Physics",
                 sessions: "8 completed",
                 nextSession: "Today, 6:00 PM",
-                image: "/placeholder.svg?height=100&width=100",
+                image: "https://img.freepik.com/free-photo/hipster-posing-with-coffee_158595-3765.jpg?uid=R170200228&ga=GA1.1.2064536539.1745487729&semt=ais_hybrid&w=740",
               },
               {
                 name: "Sam Rodriguez",
                 subject: "Chemistry",
                 sessions: "5 completed",
                 nextSession: "Today, 8:00 PM",
-                image: "/placeholder.svg?height=100&width=100",
+                image: "https://img.freepik.com/free-photo/front-view-young-female-student-red-shirt-wearing-backpack-holding-files-copybook-blue-background_140725-40949.jpg?uid=R170200228&ga=GA1.1.2064536539.1745487729&semt=ais_hybrid&w=740",
               },
               {
                 name: "Taylor Morgan",
                 subject: "Biology",
                 sessions: "9 completed",
                 nextSession: "Tomorrow, 5:00 PM",
-                image: "/placeholder.svg?height=100&width=100",
+                image: "https://img.freepik.com/free-photo/portrait-young-happy-blogger-with-modern-laptop-outdoors_231208-2070.jpg?uid=R170200228&ga=GA1.1.2064536539.1745487729&semt=ais_hybrid&w=740",
               },
               {
                 name: "Jordan Lee",
                 subject: "Computer Science",
                 sessions: "3 completed",
                 nextSession: "Oct 15, 7:00 PM",
-                image: "/placeholder.svg?height=100&width=100",
+                image: "https://img.freepik.com/premium-photo/pretty-indian-asian-young-college-girl-holding-books-bag-while-standing-isolated-white-background_466689-18227.jpg?uid=R170200228&ga=GA1.1.2064536539.1745487729&semt=ais_hybrid&w=740",
               },
               {
                 name: "Casey Kim",
                 subject: "Mathematics",
                 sessions: "6 completed",
                 nextSession: "Oct 16, 4:30 PM",
-                image: "/placeholder.svg?height=100&width=100",
+                image: "https://img.freepik.com/premium-photo/woman-with-long-hair-holding-book-with-word-it_777271-67369.jpg?uid=R170200228&ga=GA1.1.2064536539.1745487729&semt=ais_hybrid&w=740",
               },
             ].map((student, index) => (
               <Card key={index}>
