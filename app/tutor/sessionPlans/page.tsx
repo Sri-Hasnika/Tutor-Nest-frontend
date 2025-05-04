@@ -136,7 +136,7 @@ const SessionPlansPage: React.FC = () => {
         </button>
       </div>
       
-      {sessionPlans.length === 0 ? (
+      {sessionPlans?.length === 0 ? (
         <div className="p-8 flex flex-col items-center justify-center bg-gray-50 rounded-lg mx-6 text-gray-500">
           <FileText className="h-12 w-12 mb-4 text-gray-400" />
           <h3 className="text-lg font-medium mb-1">No session plans found</h3>
@@ -144,7 +144,7 @@ const SessionPlansPage: React.FC = () => {
         </div>
       ) : (
         <div className="px-6 pb-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-          {sessionPlans.map((plan) => (
+          {sessionPlans?.map((plan) => (
             <div
               key={plan._id}
               className="bg-white shadow-md hover:shadow-lg rounded-xl overflow-hidden transition-shadow duration-300 border border-gray-100"
@@ -205,7 +205,7 @@ const SessionPlansPage: React.FC = () => {
                       <p className="text-xs text-gray-500 mb-0.5">Schedule</p>
                       <p className="text-sm font-medium">{plan.schedule.daysPerWeek} sessions/week</p>
                       <div className="mt-1 space-y-1">
-                        {plan.schedule.timings.map((time, index) => (
+                        {plan.schedule.timings?.map((time, index) => (
                           <div key={index} className="bg-gray-50 text-xs px-2 py-1 rounded inline-block mr-2 mb-1">
                             {time}
                           </div>

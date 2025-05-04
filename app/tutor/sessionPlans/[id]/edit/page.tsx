@@ -72,8 +72,8 @@ const EditSessionPlanPage: React.FC = () => {
     setUpdating(true);
     setUpdateError(null);
 
-    const topicsArray = topics.split(',').map(topic => topic.trim());
-    const timingsArray = timings.split(',').map(time => time.trim());
+    const topicsArray = topics?.split(',').map(topic => topic.trim());
+    const timingsArray = timings?.split(',').map(time => time.trim());
 
     try {
         await axios.put(`http://localhost:8000/sessionPlan-api/${id}`, {

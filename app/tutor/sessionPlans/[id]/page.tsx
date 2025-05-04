@@ -175,7 +175,7 @@ const SessionPlanDetailPage: React.FC = () => {
                     Topics
                   </h3>
                   <div className="flex flex-wrap gap-2">
-                    {sessionPlan.topics.map((topic, index) => (
+                    {sessionPlan.topics?.map((topic, index) => (
                       <span key={index} className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-sm">
                         {topic}
                       </span>
@@ -228,7 +228,7 @@ const SessionPlanDetailPage: React.FC = () => {
                   
                   <h4 className="text-sm font-medium text-gray-500 mb-2">Session Timings:</h4>
                   <div className="space-y-2">
-                    {sessionPlan.schedule.timings.map((time, index) => (
+                    {sessionPlan.schedule.timings?.map((time, index) => (
                       <div key={index} className="bg-white border border-gray-200 rounded-md px-3 py-2 flex items-center">
                         <Clock className="h-4 w-4 text-gray-400 mr-2" />
                         <span className="text-gray-700">{time}</span>

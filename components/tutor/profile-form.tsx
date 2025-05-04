@@ -150,7 +150,7 @@ export function TutorProfileForm() {
             <div>
               <Label>Subjects</Label>
               <div className="mt-2 grid grid-cols-2 gap-2 max-h-52 overflow-y-auto">
-                {allSubjects.map((subject) => (
+                {allSubjects?.map((subject) => (
                   <div key={subject} className="flex items-center space-x-2">
                     <Checkbox
                       id={`subject-${subject}`}
@@ -203,7 +203,7 @@ export function TutorProfileForm() {
         <h3 className="text-lg font-medium mb-4">Availability</h3>
 
         <div className="space-y-4">
-          {availability.map((slot, index) => (
+          {availability?.map((slot, index) => (
             <div key={index} className="flex flex-wrap items-end gap-4">
               <div className="w-full sm:w-auto">
                 <Label>Day</Label>
@@ -212,7 +212,7 @@ export function TutorProfileForm() {
                     <SelectValue placeholder="Select day" />
                   </SelectTrigger>
                   <SelectContent>
-                    {days.map((day) => (
+                    {days?.map((day) => (
                       <SelectItem key={day} value={day}>
                         {day}
                       </SelectItem>

@@ -72,7 +72,7 @@ export function BookSessionModal({ isOpen, onClose }: BookSessionModalProps) {
                   <SelectValue placeholder="Select tutee" />
                 </SelectTrigger>
                 <SelectContent>
-                  {tutees.map((t) => (
+                  {tutees?.map((t) => (
                     <SelectItem key={t.id} value={t.id}>
                       {t.name}
                     </SelectItem>
@@ -88,7 +88,7 @@ export function BookSessionModal({ isOpen, onClose }: BookSessionModalProps) {
                   <SelectValue placeholder="Select subject" />
                 </SelectTrigger>
                 <SelectContent>
-                  {subjects.map((s) => (
+                  {subjects?.map((s) => (
                     <SelectItem key={s.id} value={s.id}>
                       {s.name}
                     </SelectItem>

@@ -20,6 +20,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
 
   const [profileUrl,setProfileUrl] = useState<any>("");
 
+  const dashboardLink = role === "tutee"? "/dashboard/notifications" : "/tutor/notifications";
 
   useEffect(()=>{
     const r= localStorage.getItem("role");
@@ -66,7 +67,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
             </Link>
           </div>
           <nav className="flex items-center gap-6">
-            <Link href="/dashboard/notifications" className="relative transition-transform hover:scale-105">
+            <Link href={dashboardLink} className="relative transition-transform hover:scale-105">
               <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-medium text-primary-foreground">
                 3
               </span>

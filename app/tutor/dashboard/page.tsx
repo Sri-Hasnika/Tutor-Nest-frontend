@@ -279,7 +279,7 @@ export default function TutorDashboardPage() {
                 <CardContent>
                   {section.items ? (
                     <div className="space-y-4">
-                      {section.items.map((item, idx) => (
+                      {section?.items?.map((item, idx) => (
                         <div key={idx} className="flex justify-between items-center pb-2 border-b">
                           <span className="font-medium">{item.name}</span>
                           <div className="text-right">

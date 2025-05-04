@@ -306,7 +306,7 @@ export function ProgressTracker() {
     try {
       setIsLoading(true);
       
-      const completedTopics = progress.completedTopics.map(topic => topic.topicName);
+      const completedTopics = progress.completedTopics?.map(topic => topic.topicName);
       
       const response = await fetch(
         `${API_BASE_URL}/progress-api/save`,
@@ -354,7 +354,7 @@ export function ProgressTracker() {
               <SelectValue placeholder="Select a tutee" />
             </SelectTrigger>
             <SelectContent>
-              {tutees.map((tutee) => (
+              {tutees?.map((tutee) => (
                 <SelectItem key={tutee._id} value={tutee._id}>
                   {tutee.firstName} {tutee.lastName}
                 </SelectItem>
@@ -370,7 +370,7 @@ export function ProgressTracker() {
               
               <div className="space-y-2 mb-4">
                 {/* Already completed topics */}
-                {progress.completedTopics.map((topic) => (
+                {progress.completedTopics?.map((topic) => (
                   <div key={topic.topicName} className="flex items-center justify-between border-b pb-2">
                     <div className="flex items-center space-x-2">
                       <Checkbox
@@ -398,7 +398,7 @@ export function ProgressTracker() {
                 ))}
                 
                 {/* Pending topics */}
-                {progress.pendingTopics.map((topic) => (
+                {progress.pendingTopics?.map((topic) => (
                   <div key={topic} className="flex items-center justify-between border-b pb-2">
                     <div className="flex items-center space-x-2">
                       <Checkbox
@@ -479,11 +479,11 @@ export function ProgressTracker() {
               </div>
               
               {/* Display uploaded reports */}
-              {progress.assessmentReports && progress.assessmentReports.length > 0 && (
+              {progress.assessmentReports && progress.assessmentReports?.length > 0 && (
                 <div className="mt-4">
                   <h3 className="text-md font-medium mb-2">Uploaded Reports</h3>
                   <ul className="space-y-1">
-                    {progress.assessmentReports.map((report, index) => (
+                    {progress.assessmentReports?.map((report, index) => (
                       <li key={index} className="text-blue-500 hover:underline">
                         <a href={`${API_BASE_URL}${report.fileUrl}`} target="_blank" rel="noopener noreferrer">
                           {report.fileName} ({new Date(report.uploadDate).toLocaleDateString()})

@@ -98,16 +98,16 @@ export function SessionTabs() {
         </TabsList>
 
         <TabsContent value="upcoming" className="space-y-4">
-          {upcomingSessions.length > 0 ? (
-            upcomingSessions.map((session) => <BookingCard key={session.id} session={session} type="upcoming" />)
+          {upcomingSessions?.length > 0 ? (
+            upcomingSessions?.map((session) => <BookingCard key={session.id} session={session} type="upcoming" />)
           ) : (
             <p className="text-center py-8 text-muted-foreground">No upcoming sessions</p>
           )}
         </TabsContent>
 
         <TabsContent value="past" className="space-y-4">
-          {pastSessions.length > 0 ? (
-            pastSessions.map((session) => (
+          {pastSessions?.length > 0 ? (
+            pastSessions?.map((session) => (
               <BookingCard
                 key={session.id}
                 session={session}
@@ -121,8 +121,8 @@ export function SessionTabs() {
         </TabsContent>
 
         <TabsContent value="pending" className="space-y-4">
-          {pendingBookings.length > 0 ? (
-            pendingBookings.map((session) => <BookingCard key={session.id} session={session} type="pending" />)
+          {pendingBookings?.length > 0 ? (
+            pendingBookings?.map((session) => <BookingCard key={session.id} session={session} type="pending" />)
           ) : (
             <p className="text-center py-8 text-muted-foreground">No pending bookings</p>
           )}

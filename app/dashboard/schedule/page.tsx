@@ -60,7 +60,7 @@ export default function SchedulePage() {
         const data = await response.json();
         
         // Transform the API response data to match our expected format
-        const formattedSessions = data.payload.map(session => ({
+        const formattedSessions = data.payload?.map(session => ({
           _id: session._id,
           subject: session.subject,
           tuteeId: { name: `${user.firstName} ${user.lastName}` },
@@ -128,7 +128,7 @@ export default function SchedulePage() {
     .sort((a, b) => b.finalDate - a.finalDate); // Sort reverse chronologically
 
   // Get date with sessions to highlight in calendar
-  const datesWithSessions = sessions
+  const datesWithSessions = sessions?
     .filter(session => session.finalDate)
     .map(session => new Date(session.finalDate).toDateString());
 
@@ -169,7 +169,7 @@ export default function SchedulePage() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-blue-600">Today's Sessions</p>
-                <p className="text-2xl font-bold">{todaySessions.length}</p>
+                <p className="text-2xl font-bold">{todaySessions?.length}</p>
               </div>
               <div className="p-2 bg-white rounded-full shadow-sm">
                 <CalendarIcon className="h-6 w-6 text-blue-500" />
@@ -183,7 +183,7 @@ export default function SchedulePage() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-purple-600">Upcoming Sessions</p>
-                <p className="text-2xl font-bold">{upcomingSessions.length}</p>
+                <p className="text-2xl font-bold">{upcomingSessions?.length}</p>
               </div>
               <div className="p-2 bg-white rounded-full shadow-sm">
                 <Clock className="h-6 w-6 text-purple-500" />
@@ -197,7 +197,7 @@ export default function SchedulePage() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-green-600">Past Sessions</p>
-                <p className="text-2xl font-bold">{pastSessions.length}</p>
+                <p className="text-2xl font-bold">{pastSessions?.length}</p>
               </div>
               <div className="p-2 bg-white rounded-full shadow-sm">
                 <Book className="h-6 w-6 text-green-500" />
@@ -245,7 +245,7 @@ export default function SchedulePage() {
                     Sessions on {selectedDate?.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
                   </h2>
                   <Badge variant="outline" className="ml-2">
-                    {sessionsForSelectedDate.length} {sessionsForSelectedDate.length === 1 ? 'Session' : 'Sessions'}
+                    {sessionsForSelectedDate?.length} {sessionsForSelectedDate?.length === 1 ? 'Session' : 'Sessions'}
                   </Badge>
                 </div>
                 
@@ -260,7 +260,7 @@ export default function SchedulePage() {
                         </div>
                       </div>
                     </div>
-                  ) : sessionsForSelectedDate.length === 0 ? (
+                  ) : sessionsForSelectedDate?.length === 0 ? (
                     <div className="bg-white rounded-lg border border-dashed border-gray-300 p-6 text-center">
                       <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-gray-100">
                         <CalendarIcon className="h-6 w-6 text-gray-500" />
@@ -277,7 +277,7 @@ export default function SchedulePage() {
                       </Button>
                     </div>
                   ) : (
-                    sessionsForSelectedDate.map((session) => (
+                    sessionsForSelectedDate?.map((session) => (
                       <div key={session._id} className="flex items-start space-x-4 rounded-lg bg-white border shadow-sm p-4 transition-all hover:border-blue-200 hover:shadow">
                         <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 text-blue-600">
                           <VideoIcon className="h-6 w-6" />
@@ -343,12 +343,12 @@ export default function SchedulePage() {
                     <div className="h-16 rounded bg-gray-100"></div>
                     <div className="h-16 rounded bg-gray-100"></div>
                   </div>
-                ) : todaySessions.length === 0 ? (
+                ) : todaySessions?.length === 0 ? (
                   <div className="text-center py-6">
                     <p className="text-sm text-gray-500">No sessions scheduled for today</p>
                   </div>
                 ) : (
-                  todaySessions.map((session) => (
+                  todaySessions?.map((session) => (
                     <div key={session._id} className="flex items-center space-x-3 rounded-lg bg-white border p-3 transition-all hover:border-blue-200 hover:shadow-sm">
                       <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-600">
                         <VideoIcon className="h-5 w-5" />
@@ -408,7 +408,7 @@ export default function SchedulePage() {
                     <div className="h-16 rounded bg-gray-100"></div>
                     <div className="h-16 rounded bg-gray-100"></div>
                   </div>
-                ) : upcomingSessions.length === 0 ? (
+                ) : upcomingSessions?.length === 0 ? (
                   <div className="text-center py-6">
                     <p className="text-sm text-gray-500">No upcoming sessions in the next 7 days</p>
                     <Button 
@@ -422,7 +422,7 @@ export default function SchedulePage() {
                     </Button>
                   </div>
                 ) : (
-                  upcomingSessions.map((session) => (
+                  upcomingSessions?.map((session) => (
                     <div key={session._id} className="flex items-center space-x-3 rounded-lg bg-white border p-3 transition-all hover:border-purple-200 hover:shadow-sm">
                       <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-purple-100 text-purple-600">
                         <VideoIcon className="h-5 w-5" />
@@ -480,7 +480,7 @@ export default function SchedulePage() {
                   <div className="h-48 rounded bg-gray-100"></div>
                 </div>
               </div>
-            ) : upcomingSessions.length === 0 ? (
+            ) : upcomingSessions?.length === 0 ? (
               <div className="col-span-full bg-white rounded-lg border border-dashed border-gray-300 p-12 text-center">
                 <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gray-100">
                   <CalendarIcon className="h-10 w-10 text-gray-500" />
@@ -496,7 +496,7 @@ export default function SchedulePage() {
                 </Button>
               </div>
             ) : (
-              upcomingSessions.map((session) => (
+              upcomingSessions?.map((session) => (
                 <Card key={session._id} className="overflow-hidden border shadow-sm transition-all hover:shadow-md">
                   <CardHeader className="pb-2 border-b bg-gradient-to-r from-gray-50 to-gray-100">
                     <div className="flex justify-between items-start">
@@ -562,7 +562,7 @@ export default function SchedulePage() {
                   <div className="h-48 rounded bg-gray-100"></div>
                 </div>
               </div>
-            ) : pastSessions.length === 0 ? (
+            ) : pastSessions?.length === 0 ? (
               <div className="col-span-full bg-white rounded-lg border border-dashed border-gray-300 p-12 text-center">
                 <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gray-100">
                   <Book className="h-10 w-10 text-gray-500" />
@@ -571,7 +571,7 @@ export default function SchedulePage() {
                 <p className="mt-2 text-sm text-gray-500">Your completed sessions will appear here</p>
               </div>
             ) : (
-              pastSessions.map((session) => (
+              pastSessions?.map((session) => (
                 <Card key={session._id} className="overflow-hidden border shadow-sm">
                   <CardHeader className="pb-2 border-b bg-gradient-to-r from-gray-50 to-gray-100">
                     <div className="flex justify-between items-start">

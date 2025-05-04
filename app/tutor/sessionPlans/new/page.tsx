@@ -45,7 +45,7 @@ useEffect(() => {
       const response = await axios.get(`http://localhost:8000/tutor-api/${tutorId}/tutees`);
       console.log("Tutees response:", response.data.payload);
       setTutees(response.data.payload);
-      if (response.data.payload.length > 0) {
+      if (response.data.payload?.length > 0) {
         setTuteeId(response.data.payload[0]._id);
       }
     } catch (err) {
@@ -63,8 +63,8 @@ useEffect(() => {
     setLoading(true);
     setError(null);
 
-    const topicsArray = topics.split(',').map(topic => topic.trim());
-    const timingsArray = timings.split(',').map(time => time.trim());
+    const topicsArray = topics?.split(',').map(topic => topic.trim());
+    const timingsArray = timings?.split(',').map(time => time.trim());
 
     try {
       await axios.post('http://localhost:8000/sessionPlan-api/create', {
@@ -120,7 +120,7 @@ useEffect(() => {
                     className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-700 focus:border-gray-700 transition duration-200"
                     required
                   >
-                    {tutees.map((tutee) => (
+                    {tutees?.map((tutee) => (
                       <option key={tutee._id} value={tutee._id}>
                         {tutee.firstName} {tutee.lastName}
                       </option>

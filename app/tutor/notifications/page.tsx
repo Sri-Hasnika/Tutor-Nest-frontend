@@ -129,7 +129,7 @@ const DemoClasses: React.FC = () => {
       const response = await fetch(`http://localhost:8000/sessionPlan-api?tutorId=${tutorId}&tuteeId=${tuteeId}`);
       const data = await response.json();
       if (response.ok) {
-        if (data.payload && data.payload.length > 0) {
+        if (data.payload && data.payload?.length > 0) {
           setSessionPlan(data.payload[0]);
         } else {
           setSessionPlan(null);
@@ -193,7 +193,7 @@ const DemoClasses: React.FC = () => {
       <DashboardHeader heading="Demo Class Notifications" text="Manage your demo class meet links and dates" />
       
       <div className="p-8">
-        {demoClasses.length === 0 ? (
+        {demoClasses?.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-16 text-center">
             <div className="bg-gray-50 rounded-full p-6 mb-4">
               <Calendar className="w-12 h-12 text-gray-400" />
@@ -203,7 +203,7 @@ const DemoClasses: React.FC = () => {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {demoClasses.map((demo) => {
+            {demoClasses?.map((demo) => {
               const isMeetUpdated = demo.meetLink && demo.finalDate;
               const isSameDay = isToday(demo.finalDate || "");
               
@@ -373,7 +373,7 @@ const DemoClasses: React.FC = () => {
                 <div className="bg-gray-50 rounded-lg p-4">
                   <h4 className="font-medium text-gray-800 mb-2">Topics</h4>
                   <div className="flex flex-wrap gap-2">
-                    {sessionPlan.topics.map((topic: string, index: number) => (
+                    {sessionPlan?.topics?.map((topic: string, index: number) => (
                       <span key={index} className="bg-gray-200 text-gray-800 px-2.5 py-1 rounded-md text-xs transition-all duration-300 hover:bg-gray-300">
                         {topic}
                       </span>
@@ -385,7 +385,7 @@ const DemoClasses: React.FC = () => {
                   <h4 className="font-medium text-gray-800 mb-2">Schedule</h4>
                   <p className="text-gray-700 mb-2">{sessionPlan.schedule.daysPerWeek} sessions per week</p>
                   <ul className="space-y-1 pl-4 border-l-2 border-gray-200">
-                    {sessionPlan.schedule.timings.map((time: string, index: number) => (
+                    {sessionPlan.schedule.timings?.map((time: string, index: number) => (
                       <li key={index} className="text-gray-600">{time}</li>
                     ))}
                   </ul>

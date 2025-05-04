@@ -129,7 +129,7 @@ const TutorPage = async ({ params }: PageProps) => {
       <section className="mb-6">
         <h2 className="text-xl font-semibold mb-2">Courses to Teach</h2>
         <ul className="list-disc list-inside">
-          {tutor.courseToTeach.map((course) => (
+          {tutor.courseToTeach?.map((course) => (
             <li key={course}>{course}</li>
           ))}
         </ul>
@@ -138,7 +138,7 @@ const TutorPage = async ({ params }: PageProps) => {
       <section className="mb-6">
         <h2 className="text-xl font-semibold mb-2">Subjects to Teach</h2>
         <ul className="list-disc list-inside">
-          {tutor.subjectsToTeach.map((subject) => (
+          {tutor.subjectsToTeach?.map((subject) => (
             <li key={subject}>{subject}</li>
           ))}
         </ul>

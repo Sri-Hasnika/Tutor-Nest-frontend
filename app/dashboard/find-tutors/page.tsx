@@ -150,7 +150,7 @@ export default function FindTutorsPage() {
         (rating === "4.5plus" && tutor.rating >= 4.5) ||
         (rating === "5" && tutor.rating === 5.0)
       const matchesAvailability =
-        availability.length === 0 || availability.every((a) => tutor.availability.includes(a))
+        availability?.length === 0 || availability?.every((a) => tutor.availability?.includes(a))
       const matchesSearch =
         search === "" ||
         tutor.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -377,7 +377,7 @@ export default function FindTutorsPage() {
         </Card>
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <p className="text-sm text-muted-foreground">Showing {filteredTutors.length} tutors</p>
+            <p className="text-sm text-muted-foreground">Showing {filteredTutors?.length} tutors</p>
           </div>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {filteredTutors?.map((tutor, index) => (

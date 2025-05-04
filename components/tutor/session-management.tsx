@@ -34,7 +34,7 @@ export function SessionManagement() {
           },
         })
         const data = await res.json()
-        if (data.payload.length > 0) {
+        if (data.payload?.length > 0) {
           setSessionPlans(data.payload || [])
         }
       } catch (error) {
@@ -59,7 +59,7 @@ export function SessionManagement() {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.payload.length > 0) {
+        if (data.payload?.length > 0) {
           setSessions(data.payload || [])
         }
         setIsLoading(false)
@@ -101,7 +101,7 @@ export function SessionManagement() {
         })
         const sessionsData = await sessionsRes.json()
 
-        if (sessionsData.payload.length > 0) {
+        if (sessionsData.payload?.length > 0) {
           setSessions(sessionsData.payload || [])
         }
 
@@ -147,8 +147,8 @@ export function SessionManagement() {
             <CardContent className="space-y-4">
               {isLoading ? (
                 <p className="text-center py-4 text-muted-foreground">Loading sessions...</p>
-              ) : sessions.length > 0 ? (
-                sessions.map((session) => (
+              ) : sessions?.length > 0 ? (
+                sessions?.map((session) => (
                   <div key={session._id} className="flex items-start space-x-4 rounded-md border p-3">
                     <BookOpen/>
                     <div className="flex-1 space-y-1">

@@ -84,8 +84,8 @@ export function TuteeSessions() {
                 <CardContent className="space-y-4">
                   {isLoading ? (
                     <p className="text-center py-4 text-muted-foreground">Loading sessions...</p>
-                  ) : upcomingSessions.length > 0 ? (
-                    upcomingSessions.map((session) => (
+                  ) : upcomingSessions?.length > 0 ? (
+                    upcomingSessions?.map((session) => (
                       <div key={session._id} className="flex items-start space-x-4 rounded-md border p-3">
                         <BookOpen/>
                         <div className="flex-1 space-y-1">
@@ -123,8 +123,8 @@ export function TuteeSessions() {
                 <CardContent className="space-y-4">
                   {isLoading ? (
                     <p className="text-center py-4 text-muted-foreground">Loading sessions...</p>
-                  ) : pastSessions.length > 0 ? (
-                    pastSessions.map((session) => (
+                  ) : pastSessions?.length > 0 ? (
+                    pastSessions?.map((session) => (
                       <div key={session._id} className="flex items-start space-x-4 rounded-md border p-3">
                         <BookOpen/>
                         <div className="flex-1 space-y-1">

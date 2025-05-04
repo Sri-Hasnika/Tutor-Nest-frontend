@@ -60,8 +60,8 @@ export default function TutorNotificationsPage() {
     fetchNotifications()
   }, [tuteeId])
 
-  const filteredNotifications = notifications.filter((item) => item.meetLink)
-  const unreadCount = filteredNotifications.length
+  const filteredNotifications = notifications?.filter((item) => item.meetLink)
+  const unreadCount = filteredNotifications?.length
 
   return (
     <DashboardShell>
@@ -107,7 +107,7 @@ export default function TutorNotificationsPage() {
           </Card>
         )}
 
-        {!loading && !error && filteredNotifications.length === 0 && (
+        {!loading && !error && filteredNotifications?.length === 0 && (
           <Card className="border-dashed">
             <CardContent className="py-12 flex flex-col items-center justify-center text-center">
               <div className="rounded-full bg-muted p-5 mb-5 animate-in zoom-in duration-300">
@@ -121,10 +121,10 @@ export default function TutorNotificationsPage() {
           </Card>
         )}
 
-        {!loading && !error && filteredNotifications.length > 0 && (
+        {!loading && !error && filteredNotifications?.length > 0 && (
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filteredNotifications.map((notification) => {
+              {filteredNotifications?.map((notification) => {
                 const tutorName = `${notification.tutorId.firstName} ${notification.tutorId.lastName}`
                 const timeAgo = formatDistanceToNow(new Date(notification.createdAt), { addSuffix: true })
                 const formattedDate = new Date(notification.finalDate).toLocaleDateString('en-US', {

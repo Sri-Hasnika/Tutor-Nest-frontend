@@ -149,7 +149,7 @@ const About = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {teamMembers.map((member, index) => (
+            {teamMembers?.map((member, index) => (
               <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden">
                 <img src={member.image || "/placeholder.svg"} alt={member.name} className="w-full h-48 object-cover" />
                 <div className="p-6">

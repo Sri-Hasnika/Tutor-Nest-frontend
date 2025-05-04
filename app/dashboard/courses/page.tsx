@@ -119,7 +119,7 @@ export default function CoursesPage() {
 
         <TabsContent value="enrolled" className="space-y-4">
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {enrolledCourses.map((course, index) => (
+            {enrolledCourses?.map((course, index) => (
               <Card key={index} className="overflow-hidden">
                 <Image
                   src={course.image || "/placeholder.svg"}

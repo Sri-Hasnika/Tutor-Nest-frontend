@@ -65,7 +65,7 @@ export function PricingForm() {
           <Separator />
           <h3 className="text-base font-medium">Subject-specific Rates</h3>
 
-          {subjects.map((subject) => (
+          {subjects?.map((subject) => (
             <div key={subject} className="grid grid-cols-2 gap-4 items-center">
               <Label htmlFor={`rate-${subject}`}>{subject}</Label>
               <div className="flex items-center">

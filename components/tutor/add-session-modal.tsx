@@ -45,7 +45,7 @@ export function AddSessionModal({ isOpen, onClose, onSubmit, sessionPlans }: Add
         });
         const data = await response.json();
         console.log(data);
-        if (data.payload.length>0) {
+        if (data.payload?.length>0) {
           setTutees(data.payload || []);
           console.log("Fetched tutees:", data.payload);
         }
@@ -127,7 +127,7 @@ export function AddSessionModal({ isOpen, onClose, onSubmit, sessionPlans }: Add
                     <SelectValue placeholder="Select a session plan" />
                   </SelectTrigger>
                   <SelectContent>
-                    {sessionPlans.map((plan) => (
+                    {sessionPlans?.map((plan) => (
                       <SelectItem key={plan._id} value={plan._id}>
                         {plan.title}
                       </SelectItem>
@@ -143,7 +143,7 @@ export function AddSessionModal({ isOpen, onClose, onSubmit, sessionPlans }: Add
                     <SelectValue placeholder="Select a tutee" />
                   </SelectTrigger>
                   <SelectContent>
-                    {tutees.map((tutee) => (
+                    {tutees?.map((tutee) => (
                       <SelectItem key={tutee._id} value={tutee._id}>
                         {tutee.firstName} {tutee.lastName}
                       </SelectItem>
@@ -169,9 +169,9 @@ export function AddSessionModal({ isOpen, onClose, onSubmit, sessionPlans }: Add
                         <strong>Schedule:</strong>
                         <p><strong>Days per Week:</strong> {plan.schedule?.daysPerWeek ?? "N/A"}</p>
                         <p><strong>Timings:</strong></p>
-                        {plan.schedule?.timings && plan.schedule.timings.length > 0 ? (
+                        {plan.schedule?.timings && plan.schedule.timings?.length > 0 ? (
                           <ul className="list-disc list-inside ml-5">
-                            {plan.schedule.timings.map((time: string, index: number) => (
+                            {plan.schedule.timings?.map((time: string, index: number) => (
                               <li key={index}>{time}</li>
                             ))}
                           </ul>
@@ -181,9 +181,9 @@ export function AddSessionModal({ isOpen, onClose, onSubmit, sessionPlans }: Add
                       </div>
                       <div>
                         <strong>Topics:</strong>
-                        {plan.topics && plan.topics.length > 0 ? (
+                        {plan.topics && plan.topics?.length > 0 ? (
                           <ul className="list-disc list-inside">
-                            {plan.topics.map((topic: string, index: number) => (
+                            {plan.topics?.map((topic: string, index: number) => (
                               <li key={index}>{topic}</li>
                             ))}
                           </ul>

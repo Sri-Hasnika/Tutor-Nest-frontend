@@ -72,7 +72,7 @@ export function EarningsSummary() {
               <ChartYAxis />
               <ChartXAxis />
               <ChartBars>
-                {monthlyEarnings.map((data) => (
+                {monthlyEarnings?.map((data) => (
                   <ChartBar
                     key={data.month}
                     value={data.amount}
@@ -92,7 +92,7 @@ export function EarningsSummary() {
               <ChartYAxis />
               <ChartXAxis />
               <ChartBars>
-                {weeklyEarnings.map((data) => (
+                {weeklyEarnings?.map((data) => (
                   <ChartBar
                     key={data.day}
                     value={data.amount}

@@ -116,7 +116,7 @@ export function AvailabilityGrid() {
               <span className="sr-only">Days / Times</span>
             </div>
 
-            {timeSlots.map((time) => (
+            {timeSlots?.map((time) => (
               <div key={time} className="p-2 text-center">
                 <div className="flex flex-col items-center">
                   <span className="text-sm font-medium">{time}</span>
@@ -130,7 +130,7 @@ export function AvailabilityGrid() {
             ))}
 
             {/* Day rows */}
-            {days.map((day) => (
+            {days?.map((day) => (
               <React.Fragment key={day}>
                 <div className="flex items-center p-2 font-medium border-t">
                   <div className="flex items-center gap-2">
@@ -144,7 +144,7 @@ export function AvailabilityGrid() {
                   </div>
                 </div>
 
-                {timeSlots.map((time) => (
+                {timeSlots?.map((time) => (
                   <div key={`${day}-${time}`} className="p-2 text-center border-t">
                     <Switch checked={availability[day][time]} onCheckedChange={() => toggleTimeSlot(day, time)} />
                   </div>
