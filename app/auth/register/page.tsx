@@ -29,7 +29,7 @@ export default function RegisterPage() {
     mobileNumber: "",
     gender: "",
     qualification: "",
-    course: "",
+    courseToTeach: "",
     pincode: "",
     locality: "",
     city: "",
@@ -38,12 +38,12 @@ export default function RegisterPage() {
   });
   const router = useRouter();
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e:any) => {
     const { id, value } = e.target;
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleSelectChange = (name, value) => {
+  const handleSelectChange = (name:any, value:any) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -82,6 +82,7 @@ export default function RegisterPage() {
       alert("Registration failed: " + (errorData?.message || "Unknown error"));
     } else {
       const data = await response.json();
+      localStorage.setItem("user", JSON.stringify(data.payload));
       console.log("Sign-in successful:", data);
       if (formData.role === "tutor") {
         router.push("/tutor/dashboard");
@@ -327,13 +328,13 @@ export default function RegisterPage() {
                         />
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="course" className="flex items-center gap-2">
+                        <Label htmlFor="courseToTeach" className="flex items-center gap-2">
                           <School className="h-4 w-4 text-primary" />
-                          Course
+                          courseToTeach
                         </Label>
                         <Input
-                          id="course"
-                          value={formData.course}
+                          id="courseToTeach"
+                          value={formData.courseToTeach}
                           onChange={handleInputChange}
                           placeholder="e.g., Science"
                           required
@@ -359,13 +360,13 @@ export default function RegisterPage() {
                         />
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="course" className="flex items-center gap-2">
+                        <Label htmlFor="courseToTeach" className="flex items-center gap-2">
                           <Book className="h-4 w-4 text-primary" />
                           Subjects
                         </Label>
                         <Input
-                          id="course"
-                          value={formData.course}
+                          id="courseToTeach"
+                          value={formData.courseToTeach}
                           onChange={handleInputChange}
                           placeholder="e.g., Mathematics, Physics"
                           required
