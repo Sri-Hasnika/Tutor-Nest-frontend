@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { Router } from 'lucide-react';
-
+import { BookOpen, MessageSquare, ArrowRight, Loader2 } from 'lucide-react';
+import { DashboardShell } from "@/app/dashboard/dashboard-shell"
 const DemoClassBookingPage: React.FC = () => {
   const params = useParams();
   const tutorIdFromParams = params?.id || '';
@@ -71,49 +71,87 @@ const DemoClassBookingPage: React.FC = () => {
     }
   };
 
+
   return (
-    <div className="max-w-md mx-auto p-6 bg-white rounded shadow-md">
-      <h1 className="text-2xl font-bold mb-4">Book a Demo Class</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label htmlFor="subject" className="block font-medium mb-1">
+    <div>
+      <DashboardShell>
+    <div className="max-w-xl mx-auto p-8 bg-white rounded-lg shadow-lg border border-gray-100">
+      <h1 className="text-3xl font-bold mb-6 text-gray-900 flex items-center">
+        <BookOpen className="mr-2 h-8 w-8" />
+        Book a Demo Class
+      </h1>
+      
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="space-y-2">
+          <label htmlFor="subject" className="block text-sm font-medium text-gray-700">
             Subject
           </label>
-          <input
-            type="text"
-            id="subject"
-            value={subject}
-            onChange={(e) => setSubject(e.target.value)}
-            required
-            className="w-full border border-gray-300 rounded px-3 py-2"
-            placeholder="Enter Subject"
-          />
+          <div className="relative">
+            <input
+              type="text"
+              id="subject"
+              value={subject}
+              onChange={(e) => setSubject(e.target.value)}
+              required
+              className="w-full border-2 border-gray-300 rounded-md px-4 py-3 focus:ring-2 focus:ring-black focus:border-black outline-none transition-all"
+              placeholder="What would you like to learn?"
+            />
+          </div>
         </div>
-        <div>
-          <label htmlFor="message" className="block font-medium mb-1">
-            Message
+
+        <div className="space-y-2">
+          <label htmlFor="message" className="block text-sm font-medium text-gray-700 flex items-center">
+            <MessageSquare className="mr-2 h-4 w-4" />
+            Message to Tutor
           </label>
           <textarea
             id="message"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             required
-            className="w-full border border-gray-300 rounded px-3 py-2"
-            placeholder="Enter your message"
+            className="w-full border-2 border-gray-300 rounded-md px-4 py-3 focus:ring-2 focus:ring-black focus:border-black outline-none transition-all"
+            placeholder="Introduce yourself and share what you hope to learn in this demo class..."
             rows={4}
           />
         </div>
+
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 disabled:opacity-50"
+          className="w-full bg-black text-white py-3 px-6 rounded-md hover:bg-gray-800 disabled:opacity-50 transition-all duration-200 flex items-center justify-center"
         >
-          {loading ? 'Booking...' : 'Book Demo Class'}
+          {loading ? (
+            <>
+              <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+              Booking Demo Class...
+            </>
+          ) : (
+            <>
+              Book Demo Class
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </>
+          )}
         </button>
       </form>
-      {responseMessage && <p className="mt-4 text-green-600">{responseMessage}</p>}
-      {errorMessage && <p className="mt-4 text-red-600">{errorMessage}</p>}
+
+      {responseMessage && (
+        <div className="mt-6 p-4 rounded-md bg-gray-100 border-l-4 border-black">
+          <p className="text-gray-900 font-medium">{responseMessage}</p>
+        </div>
+      )}
+      
+      {errorMessage && (
+        <div className="mt-6 p-4 rounded-md bg-red-50 border-l-4 border-red-500">
+          <p className="text-red-700">{errorMessage}</p>
+        </div>
+      )}
+      
+      <div className="mt-6 text-sm text-gray-500 text-center">
+        After booking, you'll be redirected to the tutor listings page
+      </div>
     </div>
+  </DashboardShell>
+  </div>
   );
 };
 

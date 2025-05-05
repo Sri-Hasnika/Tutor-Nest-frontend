@@ -23,7 +23,7 @@ const allTutors = [
     rating: 4.9,
     reviews: 128,
     price: 45,
-    image: "/placeholder.svg?height=200&width=200",
+    image: "https://img.freepik.com/free-photo/medium-shot-employee-holding-cardboard-box_23-2149392078.jpg?uid=R170200228&ga=GA1.1.2064536539.1745487729&semt=ais_hybrid&w=740",
     availability: ["weekdays", "evenings"],
     qualification: "PhD",
     age: 35,
@@ -37,7 +37,7 @@ const allTutors = [
     rating: 4.8,
     reviews: 96,
     price: 50,
-    image: "/placeholder.svg?height=200&width=200",
+    image: "https://img.freepik.com/free-photo/front-view-man-classroom_23-2150444920.jpg?uid=R170200228&ga=GA1.1.2064536539.1745487729&semt=ais_hybrid&w=740",
     availability: ["weekends", "evenings"],
     qualification: "Professor",
     age: 42,
@@ -51,7 +51,7 @@ const allTutors = [
     rating: 4.9,
     reviews: 112,
     price: 40,
-    image: "/placeholder.svg?height=200&width=200",
+    image: "https://img.freepik.com/free-photo/front-view-young-female-student-white-t-shirt-grey-coat-grey-trousers-with-copybook-her-hands-smiling-pink-desk-lessons-university-college-study_140725-35059.jpg?uid=R170200228&ga=GA1.1.2064536539.1745487729&semt=ais_hybrid&w=740",
     availability: ["weekdays", "mornings"],
     qualification: "Masters",
     age: 29,
@@ -65,7 +65,7 @@ const allTutors = [
     rating: 4.7,
     reviews: 84,
     price: 48,
-    image: "/placeholder.svg?height=200&width=200",
+    image: "https://img.freepik.com/free-photo/portrait-professor-work-educational-system_23-2151737290.jpg?uid=R170200228&ga=GA1.1.2064536539.1745487729&semt=ais_hybrid&w=740",
     availability: ["weekends", "evenings"],
     qualification: "PhD",
     age: 40,
@@ -79,7 +79,7 @@ const allTutors = [
     rating: 5.0,
     reviews: 76,
     price: 38,
-    image: "/placeholder.svg?height=200&width=200",
+    image: "https://img.freepik.com/free-photo/young-people-eating-berries-street_23-2150163636.jpg?uid=R170200228&ga=GA1.1.2064536539.1745487729&semt=ais_hybrid&w=740",
     availability: ["weekdays", "evenings"],
     qualification: "Professor",
     age: 45,
@@ -93,7 +93,7 @@ const allTutors = [
     rating: 4.8,
     reviews: 92,
     price: 55,
-    image: "/placeholder.svg?height=200&width=200",
+    image: "https://img.freepik.com/free-photo/content-senior-businessman-sitting-cafe-table_1262-1528.jpg?uid=R170200228&ga=GA1.1.2064536539.1745487729&semt=ais_hybrid&w=740",
     availability: ["weekends"],
     qualification: "PhD",
     age: 38,
@@ -400,7 +400,7 @@ export default function FindTutorsPage() {
                     height={100}
                     className="mx-auto rounded-full aspect-square object-cover mb-4"
                   />
-                  <CardTitle className="text-lg">{tutor.name}</CardTitle>
+                  <CardTitle className="text-lg">{tutor.firstName + tutor.lastName }</CardTitle>
                   <CardDescription className="text-primary font-medium mt-1">
                     {tutor.subject} Specialist
                   </CardDescription>

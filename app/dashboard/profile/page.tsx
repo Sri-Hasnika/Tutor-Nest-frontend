@@ -50,7 +50,7 @@ export default function ProfilePage() {
         },
         body: JSON.stringify(updatedUser),
       });
-  
+  // profile is defined
       if (response.ok) {
         const data = await response.json();
         alert("Profile updated successfully!");

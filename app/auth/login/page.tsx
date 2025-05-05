@@ -80,7 +80,7 @@ export default function LoginPage() {
         <div className="bg-primary rounded-full p-2 text-white">
           <GraduationCap className="h-6 w-6" />
         </div>
-        <span className="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-600">EduConnect</span>
+        <span className="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-600">Tutor Nest</span>
       </Link>
       
       {/* Left side - Image section */}
@@ -96,7 +96,7 @@ export default function LoginPage() {
           />
           <div className="absolute inset-0 bg-gradient-to-r from-blue-900/30 to-purple-900/30 flex flex-col items-center justify-center text-white p-8">
             <div className="max-w-md text-center space-y-4 backdrop-blur-sm bg-black/20 p-8 rounded-2xl">
-              <h1 className="text-3xl md:text-4xl font-bold">Welcome to EduConnect</h1>
+              <h1 className="text-3xl md:text-4xl font-bold">Welcome to Tutor Nest</h1>
               <p className="text-lg md:text-xl">Connect with expert tutors or find eager students. Your educational journey starts here.</p>
             </div>
           </div>
